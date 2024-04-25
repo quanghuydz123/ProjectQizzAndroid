@@ -77,7 +77,7 @@ public class DbQuery{
             DocumentReference scoreDoc = userDoc.collection("USER_DATA").document("MY_SCORES");
             Map<String,Object> testData = new ArrayMap<>();
             testData.put(g_testList.get(g_selected_test_index).getTestID(),score);
-            batch.set(scoreDoc,testData, SetOptions.merge());
+            batch.set(scoreDoc,testData, SetOptions.merge());//SetOptions.merge() nếu có rồi thi update chứ không thêm nữa
         }
         batch.commit()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -86,8 +86,8 @@ public class DbQuery{
                         if(score > g_testList.get(g_selected_test_index).getTopScore()){
                             g_testList.get(g_selected_test_index).setTopScore(score);
                             myPerformance.setScore(score);
-                            myCompleteListener.onSucces();
                         }
+                        myCompleteListener.onSucces();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
