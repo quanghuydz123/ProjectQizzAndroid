@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(id == R.id.nav_home_buttonMenu){
                 setFragement(new CategoryFragment());
                 return true;
-            }else if(id == R.id.nav_home_buttonMenu){
+            }else if(id == R.id.nav_leaderboard_buttonMenu){
                 setFragement(new LeaderBoardFragment());
                 return true;
             }else if(id == R.id.nav_account_buttonMenu){
@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Categories");
 
         bottomNavigationView = findViewById(R.id.botton_nav_bar);
         main_frame = findViewById(R.id.main_frame);
@@ -94,11 +96,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerProfileName = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_name);
         drawerProfileEmail = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_email);
         drawerProfileText = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_text);
-        String name = DbQuery.myProfile.getName();
+        String profileName = DbQuery.myProfile.getName();
         String email = DbQuery.myProfile.getEmail();
-        drawerProfileName.setText(name);
+        drawerProfileName.setText(profileName);
         drawerProfileEmail.setText(email);
-        drawerProfileText.setText(name.toUpperCase().substring(0,1));
+        String[] parts = profileName.split(" ");
+        String lastName = parts[parts.length - 1]; // Lấy từ cuối cùng trong tên
+        String firstLetter = lastName.toUpperCase().substring(0, 1);
+        drawerProfileText.setText(firstLetter);
     }
 
     private void setFragement(Fragment categoryFragment) {

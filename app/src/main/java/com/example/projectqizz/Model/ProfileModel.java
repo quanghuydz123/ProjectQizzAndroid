@@ -4,11 +4,21 @@ public class ProfileModel {
     private String name;
     private String email;
     private Boolean IsAdmin;
+    private String phone;
 
-    public ProfileModel(String name, String email, Boolean isAdmin) {
+    public ProfileModel(String name, String email, Boolean isAdmin,String phone) {
         this.name = name;
         this.email = email;
-        IsAdmin = isAdmin;
+        this.IsAdmin = isAdmin;
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getName() {

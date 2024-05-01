@@ -11,6 +11,7 @@ import com.example.projectqizz.Model.QuestionModel;
 import com.example.projectqizz.Model.RankModel;
 import com.example.projectqizz.Model.TestModel;
 import com.example.projectqizz.MyCompleteListener;
+import com.example.projectqizz.MyProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,13 +36,39 @@ public class DbQuery{
     public static int g_selected_cat_index = 0;
     public static List<TestModel> g_testList = new ArrayList<>();
     public static int g_selected_test_index = 0;
-    public static ProfileModel myProfile = new ProfileModel("NA",null,false);
+    public static ProfileModel myProfile = new ProfileModel("NA",null,false,null);
     public static List<QuestionModel> g_quesList = new ArrayList<>();
     public static RankModel myPerformance = new RankModel(0,0);
     public static final int NOT_VISITED = 0;
     public static final int UNANSWERED =1 ;
     public static final int ANSWERED = 2;
     public static final int REVIEW = 3;
+
+    public static void saveProfileData(String name, String phone, MyCompleteListener myCompleteListener){
+        Map<String,Object> profileData = new ArrayMap<>();
+        profileData.put("NAME",name);
+        if(phone != null){
+            profileData.put("PHONE",phone);
+        }
+
+        g_firestore.collection("USERS").document(FirebaseAuth.getInstance().getUid()).update(profileData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        myProfile.setName(name);
+                        if(phone!=null){
+                            myProfile.setPhone(phone);
+                        }
+                        myCompleteListener.onSucces();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        myCompleteListener.onFailure();
+                    }
+                });
+    }
     public static void loadMyScore(MyCompleteListener myCompleteListener){
         g_firestore.collection("USERS").document(FirebaseAuth.getInstance().getUid())
                 .collection("USER_DATA").document("MY_SCORES")
@@ -136,6 +163,9 @@ public class DbQuery{
                         myProfile.setName(documentSnapshot.getString("NAME"));
                         myProfile.setEmail(documentSnapshot.getString("EMAIL_ID"));
                         myProfile.setAdmin(documentSnapshot.getBoolean("IsAdmin"));
+                        if(documentSnapshot.getString("PHONE") != null){
+                            myProfile.setPhone(documentSnapshot.getString("PHONE"));
+                        }
                         myPerformance.setScore(documentSnapshot.getLong("TOTAL_SCORE").intValue());
                         myCompleteListener.onSucces();
                     }

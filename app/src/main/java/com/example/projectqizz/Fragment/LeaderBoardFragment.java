@@ -2,12 +2,14 @@ package com.example.projectqizz.Fragment;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.projectqizz.MainActivity;
 import com.example.projectqizz.R;
 
 /**
@@ -61,6 +63,8 @@ public class LeaderBoardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Xếp hạng");
         return inflater.inflate(R.layout.fragment_leader_board, container, false);
     }
 }
