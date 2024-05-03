@@ -1,5 +1,6 @@
 package com.example.projectqizz.Fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,10 +16,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projectqizz.DB.DbQuery;
 import com.example.projectqizz.LoginActivity;
 import com.example.projectqizz.MainActivity;
+import com.example.projectqizz.MyCompleteListener;
 import com.example.projectqizz.MyProfileActivity;
 import com.example.projectqizz.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,6 +40,8 @@ public class AccountFragment extends Fragment {
     private LinearLayout btn_leader,btn_profile,btn_bookmark;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout main_frame;
+    private Dialog progressDialog;
+    private TextView dialogText;
 
 
 
@@ -56,6 +61,47 @@ public class AccountFragment extends Fragment {
         txt_image_profile.setText(firstLetter);
         txt_name.setText(profileName);
         txt_score.setText(String.valueOf(DbQuery.myPerformance.getScore()));
+
+        progressDialog  = new Dialog(getContext());//set vòng quay quay
+        progressDialog.setContentView(R.layout.dialog_layout);
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogText = progressDialog.findViewById(R.id.txtdialog);
+        dialogText.setText("Loading...");
+
+        if(DbQuery.g_usersList.size() == 0 ){
+            progressDialog.show();
+            DbQuery.getTopUsers(new MyCompleteListener() {
+                @Override
+                public void onSucces() {
+
+                    if(DbQuery.myPerformance.getScore() != 0 ){
+                        if(!DbQuery.isMeOnTopList){
+                            calculateRank();
+                        }
+                        txt_score.setText("Điểm số: " + DbQuery.myPerformance.getScore());
+                        txt_rank.setText("Hạng: " +DbQuery.myPerformance.getRank());
+
+                    }
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure() {
+                    progressDialog.dismiss();
+                    Toast.makeText(getContext(),"Tải thất bại",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            if(!DbQuery.isMeOnTopList){
+                calculateRank();
+            }
+            txt_score.setText("Điểm số: " + DbQuery.myPerformance.getScore());
+            if(DbQuery.myPerformance.getScore() != 0){
+                txt_rank.setText("Hạng:" +DbQuery.myPerformance.getRank());
+            }
+        }
         //xử lý đăng xuất
         btnLogout.setOnClickListener(new View.OnClickListener()
         {
@@ -116,5 +162,19 @@ public class AccountFragment extends Fragment {
         btn_bookmark = view.findViewById(R.id.btn_bookMarkAccount);
         btn_leader = view.findViewById(R.id.btn_leaderAccount);
         bottomNavigationView = getActivity().findViewById(R.id.botton_nav_bar);
+    }
+
+    private void calculateRank() {
+        int lowTopScore = DbQuery.g_usersList.get(DbQuery.g_usersList.size()-1).getScore();
+        int remaining_slots = DbQuery.g_usersCount - 100;
+        int mySlot = (DbQuery.myPerformance.getScore()*remaining_slots)/lowTopScore;
+        int rank;
+
+        if(lowTopScore != DbQuery.myPerformance.getScore()){
+            rank = DbQuery.g_usersCount - mySlot;
+        }else{
+            rank = 101;
+        }
+        DbQuery.myPerformance.setRank(rank);
     }
 }

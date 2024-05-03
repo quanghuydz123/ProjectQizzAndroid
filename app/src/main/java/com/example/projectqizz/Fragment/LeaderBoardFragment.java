@@ -1,63 +1,39 @@
 package com.example.projectqizz.Fragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.projectqizz.Adapter.RankAdapter;
+import com.example.projectqizz.DB.DbQuery;
 import com.example.projectqizz.MainActivity;
+import com.example.projectqizz.MyCompleteListener;
 import com.example.projectqizz.R;
+import com.example.projectqizz.TestActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LeaderBoardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.w3c.dom.Text;
+
+
 public class LeaderBoardFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private TextView txtTotalUser,txtMyImageText,txtMyScore,txtMyRank;
+    private RecyclerView usersView;
+    private RankAdapter rankAdapter;
+    private Dialog progressDialog;
+    private TextView dialogText;
     public LeaderBoardFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LeaderBoardFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LeaderBoardFragment newInstance(String param1, String param2) {
-        LeaderBoardFragment fragment = new LeaderBoardFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +41,77 @@ public class LeaderBoardFragment extends Fragment {
         // Inflate the layout for this fragment
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Xếp hạng");
-        return inflater.inflate(R.layout.fragment_leader_board, container, false);
+        View view =  inflater.inflate(R.layout.fragment_leader_board, container, false);
+
+
+        init(view);
+
+        progressDialog  = new Dialog(getContext());//set vòng quay quay
+        progressDialog.setContentView(R.layout.dialog_layout);
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogText = progressDialog.findViewById(R.id.txtdialog);
+        dialogText.setText("Loading...");
+        progressDialog.show();
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        usersView.setLayoutManager(linearLayoutManager);
+
+        rankAdapter = new RankAdapter(DbQuery.g_usersList);
+        usersView.setAdapter(rankAdapter);
+
+        DbQuery.getTopUsers(new MyCompleteListener() {
+            @Override
+            public void onSucces() {
+                rankAdapter.notifyDataSetChanged();
+
+                if(DbQuery.myPerformance.getScore() != 0 ){
+                    if(!DbQuery.isMeOnTopList){
+                        calculateRank();
+                    }
+                    txtMyScore.setText("Điểm số: " + DbQuery.myPerformance.getScore());
+                    txtMyRank.setText("Hạng:" +DbQuery.myPerformance.getRank());
+
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure() {
+                progressDialog.dismiss();
+                Toast.makeText(getContext(),"Tải thất bại",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        txtTotalUser.setText("Total Users: " + DbQuery.g_usersCount);
+        String[] parts = DbQuery.myPerformance.getName().split(" ");
+        String lastName = parts[parts.length - 1]; // Lấy từ cuối cùng trong tên
+        String firstLetter = lastName.toUpperCase().substring(0, 1);
+        txtMyImageText.setText(firstLetter);
+        return view;
+    }
+
+    private void calculateRank() {
+        int lowTopScore = DbQuery.g_usersList.get(DbQuery.g_usersList.size()-1).getScore();
+        int remaining_slots = DbQuery.g_usersCount - 100;
+        int mySlot = (DbQuery.myPerformance.getScore()*remaining_slots)/lowTopScore;
+        int rank;
+
+        if(lowTopScore != DbQuery.myPerformance.getScore()){
+            rank = DbQuery.g_usersCount - mySlot;
+        }else{
+            rank = 101;
+        }
+        DbQuery.myPerformance.setRank(rank);
+    }
+
+    private void init(View view){
+        txtTotalUser = view.findViewById(R.id.txt_total_user);
+        txtMyImageText = view.findViewById(R.id.txt_image_leader);
+        txtMyScore = view.findViewById(R.id.txt_totalScore_leader);
+        txtMyRank = view.findViewById(R.id.txt_rank_leader);
+        usersView = view.findViewById(R.id.users_view_leader);
     }
 }
