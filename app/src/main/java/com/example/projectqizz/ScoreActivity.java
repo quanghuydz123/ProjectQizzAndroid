@@ -54,7 +54,8 @@ public class ScoreActivity extends AppCompatActivity {
         btnViewAns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ScoreActivity.this,AnswersActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -67,6 +68,7 @@ public class ScoreActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(ScoreActivity.this,StartTestActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

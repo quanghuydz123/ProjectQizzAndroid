@@ -32,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String emailStr,passStr,comfirmPassStr,nameStr;
     private Dialog progressDialog;
-    private TextView dialogText;
+    private TextView dialogText,btnLoginNow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         edtComfirmPassword = findViewById(R.id.edtPasswordComfirm);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnBack = findViewById(R.id.btnBack);
+        btnLoginNow = findViewById(R.id.btnLoginNow);
         mAuth = FirebaseAuth.getInstance();
 
         progressDialog  = new Dialog(SignUpActivity.this);//set vòng quay quay
@@ -67,6 +68,12 @@ public class SignUpActivity extends AppCompatActivity {
                 {
                     signNewUser();
                 }
+            }
+        });
+        btnLoginNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

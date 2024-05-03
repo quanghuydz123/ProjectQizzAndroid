@@ -150,27 +150,53 @@ public class DbQuery{
                     }
                 });
     }
-    public static void saveResult(int score,MyCompleteListener myCompleteListener){
+    public static void saveResult(int score, MyCompleteListener myCompleteListener) {
         WriteBatch batch = g_firestore.batch();
-
         DocumentReference userDoc = g_firestore.collection("USERS").document(FirebaseAuth.getInstance().getUid());
-        batch.update(userDoc,"TOTAL_SCORE",score);
 
-        if(score > g_testList.get(g_selected_test_index).getTopScore()){
+        if (score > g_testList.get(g_selected_test_index).getTopScore()) {
             DocumentReference scoreDoc = userDoc.collection("USER_DATA").document("MY_SCORES");
-            Map<String,Object> testData = new ArrayMap<>();
-            testData.put(g_testList.get(g_selected_test_index).getTestID(),score);
-            batch.set(scoreDoc,testData, SetOptions.merge());//SetOptions.merge() nếu có rồi thi update chứ không thêm nữa
+            Map<String, Object> testData = new ArrayMap<>();
+            testData.put(g_testList.get(g_selected_test_index).getTestID(), score);
+            batch.set(scoreDoc, testData, SetOptions.merge());
         }
+
         batch.commit()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        if(score > g_testList.get(g_selected_test_index).getTopScore()){
-                            g_testList.get(g_selected_test_index).setTopScore(score);
-                            myPerformance.setScore(score);
-                        }
-                        myCompleteListener.onSucces();
+                        userDoc.collection("USER_DATA").document("MY_SCORES").get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        int top = 0;
+                                        for (int i = 0; i < g_testList.size(); i++) {
+                                            if (documentSnapshot.get(g_testList.get(i).getTestID()) != null) {
+                                                top += documentSnapshot.getLong(g_testList.get(i).getTestID()).intValue();
+                                            }
+                                        }
+                                        myPerformance.setScore(top);
+                                        userDoc.update("TOTAL_SCORE", top)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        myCompleteListener.onSucces();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        myCompleteListener.onFailure();
+                                                    }
+                                                });
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        myCompleteListener.onFailure();
+                                    }
+                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -180,6 +206,7 @@ public class DbQuery{
                     }
                 });
     }
+
     public static void loadQuestions(MyCompleteListener myCompleteListener){
         g_quesList.clear();
         g_firestore.collection("Questions")
