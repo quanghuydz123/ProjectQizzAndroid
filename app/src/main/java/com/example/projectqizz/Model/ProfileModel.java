@@ -5,12 +5,22 @@ public class ProfileModel {
     private String email;
     private Boolean IsAdmin;
     private String phone;
+    private int bookMarksCount;
 
-    public ProfileModel(String name, String email, Boolean isAdmin,String phone) {
+    public ProfileModel(String name, String email, Boolean isAdmin,String phone,int bookMarksCount) {
         this.name = name;
         this.email = email;
         this.IsAdmin = isAdmin;
         this.phone = phone;
+        this.bookMarksCount = bookMarksCount;
+    }
+
+    public int getBookMarksCount() {
+        return bookMarksCount;
+    }
+
+    public void setBookMarksCount(int bookMarksCount) {
+        this.bookMarksCount = bookMarksCount;
     }
 
     public String getPhone() {

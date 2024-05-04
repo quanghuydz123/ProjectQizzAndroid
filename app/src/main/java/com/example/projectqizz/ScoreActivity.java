@@ -51,6 +51,8 @@ public class ScoreActivity extends AppCompatActivity {
 
         loadData();
 
+        setBookMarks();
+
         btnViewAns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +76,23 @@ public class ScoreActivity extends AppCompatActivity {
 
         saveResult();
     }
+
+    private void setBookMarks() {
+        for (int i = 0 ; i < DbQuery.g_quesList.size() ; i++){
+            if(DbQuery.g_quesList.get(i).isBookmarked()){
+                if(!DbQuery.g_bmIdList.contains(DbQuery.g_quesList.get(i).getqID())){
+                    DbQuery.g_bmIdList.add(DbQuery.g_quesList.get(i).getqID());
+                    DbQuery.myProfile.setBookMarksCount(DbQuery.g_bmIdList.size());
+                }
+            }else{
+                if(DbQuery.g_bmIdList.contains(DbQuery.g_quesList.get(i).getqID())){
+                    DbQuery.g_bmIdList.remove(DbQuery.g_quesList.get(i).getqID());
+                    DbQuery.myProfile.setBookMarksCount(DbQuery.g_bmIdList.size());
+                }
+            }
+        }
+    }
+
     //nút mũi tên trên toolbar ấn thoát
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

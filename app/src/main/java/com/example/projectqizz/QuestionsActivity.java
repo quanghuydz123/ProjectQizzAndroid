@@ -45,7 +45,7 @@ public class QuestionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.questions_list_layout   );
+        setContentView(R.layout.questions_list_layout);
 
         init();
         //cấu hình recylerView
@@ -161,7 +161,6 @@ public class QuestionsActivity extends AppCompatActivity {
                     DbQuery.g_quesList.get(quesId).setStatus(DbQuery.REVIEW);
                 }else{
                     markImage.setVisibility(View.GONE);
-
                     if(DbQuery.g_quesList.get(quesId).getStatus() != -1){
                         DbQuery.g_quesList.get(quesId).setStatus(DbQuery.ANSWERED);
                     }else{
@@ -178,7 +177,25 @@ public class QuestionsActivity extends AppCompatActivity {
                 submitTest();
             }
         });
+
+        btnBookMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToBookmarks();
+            }
+        });
     }
+
+    private void addToBookmarks() {
+        if(DbQuery.g_quesList.get(quesId).isBookmarked()){
+            DbQuery.g_quesList.get(quesId).setBookmarked(false);
+            btnBookMark.setImageResource(R.drawable.twotone_bookmark_24);
+        }else{
+            DbQuery.g_quesList.get(quesId).setBookmarked(true);
+            btnBookMark.setImageResource(R.drawable.ic_bookmark_24);
+        }
+    }
+
     private void submitTest(){
         AlertDialog.Builder builder = new AlertDialog.Builder(QuestionsActivity.this);//xây dựng ra 1 thông báo
         builder.setCancelable(true);
@@ -233,6 +250,12 @@ public class QuestionsActivity extends AppCompatActivity {
                     markImage.setVisibility(View.GONE);
                 }
                 txtQuesID.setText(String.valueOf(quesId + 1) + "/" + String.valueOf(DbQuery.g_quesList.size()));
+
+                if(DbQuery.g_quesList.get(quesId).isBookmarked()){
+                    btnBookMark.setImageResource(R.drawable.ic_bookmark_24);
+                }else{
+                    btnBookMark.setImageResource(R.drawable.twotone_bookmark_24);
+                }
             }
 
             @Override
@@ -257,11 +280,18 @@ public class QuestionsActivity extends AppCompatActivity {
         drawerCloseB = findViewById(R.id.drawer_close);
         markImage = findViewById(R.id.mark_image);
         quesListGV = findViewById(R.id.ques_list_gv);
+        btnBookMark = findViewById(R.id.btn_qa_bookmark);
         quesId = 0;
         txtQuesID.setText("1/"+String.valueOf(DbQuery.g_quesList.size()));
         txtCatName.setText(DbQuery.g_catList.get(DbQuery.g_selected_cat_index).getName());
 
         DbQuery.g_quesList.get(0).setStatus(DbQuery.UNANSWERED);
+
+        if(DbQuery.g_quesList.get(0).isBookmarked()){
+            btnBookMark.setImageResource(R.drawable.ic_bookmark_24);
+        }else{
+            btnBookMark.setImageResource(R.drawable.twotone_bookmark_24);
+        }
     }
 
 

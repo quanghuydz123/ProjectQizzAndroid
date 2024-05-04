@@ -77,7 +77,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_bookmark_24"
+            android:src="@drawable/twotone_bookmark_24"
 
             />
         <ImageView
