@@ -48,6 +48,56 @@ public class DbQuery{
     public static final int ANSWERED = 2;
     public static final int REVIEW = 3;
     public static List<String> g_bmIdList = new ArrayList<>();
+    public static List<QuestionModel> g_bookmarksList = new ArrayList<>();
+    static int tmp;
+
+    public static void loadBookmarks(MyCompleteListener myCompleteListener){
+        g_bookmarksList.clear();
+        tmp = 0 ;
+        if(g_bmIdList.size() == 0 ){
+            myCompleteListener.onSucces();
+        }
+        for (int i = 0; i < g_bmIdList.size() ; i++){
+            String docId = g_bmIdList.get(i);
+
+            g_firestore.collection("Questions").document(docId)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                            boolean isBookmarked = false;
+//                            if(g_bmIdList.contains(documentSnapshot.getId())){
+//                                isBookmarked=true;
+//                            }
+                            if (documentSnapshot.exists()){
+                                g_bookmarksList.add(new QuestionModel(
+                                        documentSnapshot.getId(),
+                                        documentSnapshot.getString("QUESTION"),
+                                        documentSnapshot.getString("A"),
+                                        documentSnapshot.getString("B"),
+                                        documentSnapshot.getString("C"),
+                                        documentSnapshot.getString("D"),
+                                        documentSnapshot.getLong("ANSWER").intValue(),
+                                        0,
+                                        -1,
+                                        false
+                                ));
+                            }
+                            tmp++;
+                            if(tmp == g_bmIdList.size()){
+                                myCompleteListener.onSucces();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            myCompleteListener.onFailure();
+                        }
+                    });
+
+        }
+    }
 
     public static void loadBmIds(MyCompleteListener myCompleteListener){
         g_bmIdList.clear();
@@ -297,7 +347,7 @@ public class DbQuery{
                         if(documentSnapshot.getString("PHONE") != null){
                             myProfile.setPhone(documentSnapshot.getString("PHONE"));
                         }
-                        if(documentSnapshot.getString("BOOKMARKS") != null){
+                        if(documentSnapshot.getLong("BOOKMARKS") != null){
                             myProfile.setBookMarksCount(documentSnapshot.getLong("BOOKMARKS").intValue());
                         }
                         myPerformance.setScore(documentSnapshot.getLong("TOTAL_SCORE").intValue());
@@ -398,7 +448,8 @@ public class DbQuery{
                             g_testList.add(new TestModel(
                                     documentSnapshot.getString("TEST"+String.valueOf(i)+"_ID"),
                                     0,
-                                    documentSnapshot.getLong("TEST"+String.valueOf(i)+"_TIME").intValue()
+                                    documentSnapshot.getLong("TEST"+String.valueOf(i)+"_TIME").intValue(),
+                                    documentSnapshot.getString("TEST"+String.valueOf(i)+"_NAME")
                             ));
                         }
 
@@ -422,7 +473,8 @@ public class DbQuery{
                 getUserData(new MyCompleteListener() {
                     @Override
                     public void onSucces() {
-                        getUserCount(new MyCompleteListener() {
+                        getUserCount(new MyCompleteListener()
+                        {
                             @Override
                             public void onSucces() {
                                 loadBmIds(myCompleteListener);

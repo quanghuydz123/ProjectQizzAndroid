@@ -85,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Load thông tin người dùng
         loadInfoUser(navigationView);
-
-
         setFragement(new CategoryFragment());//giao diện hiện thi đầu tiên
         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
 
@@ -124,6 +122,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if(id == R.id.nav_leaderboard)//giả xu sử lý log uot
         {
             setFragement(new LeaderBoardFragment());
+        }
+        else if(id == R.id.nav_bookmarks){
+            Intent intent = new Intent(MainActivity.this,BookmarksActivity.class);
+            startActivity(intent);
         }
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);

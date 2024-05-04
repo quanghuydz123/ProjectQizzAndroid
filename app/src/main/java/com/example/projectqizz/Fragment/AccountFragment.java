@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectqizz.BookmarksActivity;
 import com.example.projectqizz.DB.DbQuery;
 import com.example.projectqizz.LoginActivity;
 import com.example.projectqizz.MainActivity;
@@ -53,7 +54,7 @@ public class AccountFragment extends Fragment {
         init(view);
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("My Account");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Tài khoản");
         String profileName = DbQuery.myProfile.getName();
         String[] parts = profileName.split(" ");
         String lastName = parts[parts.length - 1]; // Lấy từ cuối cùng trong tên
@@ -69,7 +70,8 @@ public class AccountFragment extends Fragment {
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText("Loading...");
 
-        if(DbQuery.g_usersList.size() == 0 ){
+        if(DbQuery.g_usersList.size() == 0 )
+        {
             progressDialog.show();
             DbQuery.getTopUsers(new MyCompleteListener() {
                 @Override
@@ -128,7 +130,8 @@ public class AccountFragment extends Fragment {
         btn_bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), BookmarksActivity.class);
+                startActivity(intent);
             }
         });
         btn_profile.setOnClickListener(new View.OnClickListener() {

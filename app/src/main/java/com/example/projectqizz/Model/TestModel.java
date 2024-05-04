@@ -4,11 +4,21 @@ public class TestModel {
     private String testID;
     private int topScore;
     private int time;
+    private String name;
 
-    public TestModel(String testID, int topScore, int time) {
+    public TestModel(String testID, int topScore, int time,String name) {
         this.testID = testID;
         this.topScore = topScore;
         this.time = time;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTestID() {

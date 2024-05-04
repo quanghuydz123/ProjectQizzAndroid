@@ -29,11 +29,12 @@
         android:layout_margin="8dp"
         android:textColor="@color/black"
         android:text="option A"
-        android:textSize="16sp"
+        android:textSize="14dp"
         android:background="@drawable/unselected_btn"
         android:elevation="3dp"
         android:translationZ="3dp"
         android:stateListAnimator="@null"
+        android:padding="8dp"
         />
     <Button
         android:id="@+id/btn_optionB"
@@ -41,12 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:textColor="@color/black"
-        android:text="option B"
-        android:textSize="16sp"
+        android:text="OPTION B"
+        android:textSize="14dp"
         android:background="@drawable/unselected_btn"
         android:elevation="3dp"
         android:translationZ="3dp"
         android:stateListAnimator="@null"
+        android:padding="8dp"
         />
     <Button
         android:id="@+id/btn_optionC"
@@ -55,11 +57,12 @@
         android:layout_margin="8dp"
         android:textColor="@color/black"
         android:text="option C"
-        android:textSize="16sp"
+        android:textSize="14dp"
         android:background="@drawable/unselected_btn"
         android:elevation="3dp"
         android:translationZ="3dp"
         android:stateListAnimator="@null"
+        android:padding="8dp"
         />
     <Button
         android:id="@+id/btn_optionD"
@@ -68,11 +71,12 @@
         android:layout_margin="8dp"
         android:textColor="@color/black"
         android:text="option D"
-        android:textSize="16sp"
+        android:textSize="14dp"
         android:background="@drawable/unselected_btn"
         android:elevation="3dp"
         android:translationZ="3dp"
         android:stateListAnimator="@null"
+        android:padding="8dp"
         />
 
 </LinearLayout>

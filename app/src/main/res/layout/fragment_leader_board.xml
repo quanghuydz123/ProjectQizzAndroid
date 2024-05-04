@@ -112,7 +112,7 @@
             android:textColor="@color/black"
             android:gravity="end"
             android:layout_weight="1"
-            android:layout_marginRight="32dp"
+            android:layout_marginRight="30dp"
             />
     </LinearLayout>
 

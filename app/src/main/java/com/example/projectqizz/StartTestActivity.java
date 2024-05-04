@@ -53,7 +53,7 @@ public class StartTestActivity extends AppCompatActivity {
 
     private void setData() {
         txtCatName.setText(DbQuery.g_catList.get(DbQuery.g_selected_cat_index).getName());
-        txtTestNo.setText("Test No. "+String.valueOf(DbQuery.g_selected_test_index)+1);
+        txtTestNo.setText(DbQuery.g_testList.get(DbQuery.g_selected_test_index).getName());
         txtTotalQ.setText(String.valueOf(DbQuery.g_quesList.size()));
         txtBestScore.setText(String.valueOf(DbQuery.g_testList.get(DbQuery.g_selected_test_index).getTopScore()));
         txtTime.setText(String.valueOf(DbQuery.g_testList.get(DbQuery.g_selected_test_index).getTime()));

@@ -37,7 +37,7 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Categories");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Danh mục");
         categoryView = view.findViewById(R.id.category_Grid);
         //loadCategories();
         CategoryAdapter categoryAdapter = new CategoryAdapter(DbQuery.g_catList);

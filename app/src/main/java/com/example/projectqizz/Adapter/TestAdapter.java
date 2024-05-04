@@ -60,7 +60,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
         public void setData(int pos,int progress)
         {
             //set value cho item view
-            testNo.setText("Test No: "+String.valueOf(pos+1) );
+            testNo.setText(DbQuery.g_testList.get(pos).getName());
             topSroce.setText(String.valueOf(progress)+"%");
             progressBar.setProgress(progress);
 
