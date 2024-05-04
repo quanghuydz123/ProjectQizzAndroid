@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
 
     <TextView
-        android:id="@+id/btnForgotPassword"
+        android:id="@+id/txtForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -104,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnForgotPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword" />
 
     <TextView
         android:id="@+id/textView3"

@@ -13,6 +13,7 @@ import com.example.projectqizz.Fragment.CategoryFragment;
 import com.example.projectqizz.Fragment.LeaderBoardFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Load thông tin người dùng
         loadInfoUser(navigationView);
         setFragement(new CategoryFragment());//giao diện hiện thi đầu tiên
-        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
 
     }
 
@@ -115,17 +115,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
         int id = item.getItemId();
-        if(id == R.id.nav_home){
-            setFragement(new CategoryFragment());
-        }else if(id == R.id.nav_account){
-            setFragement(new AccountFragment());
-        }else if(id == R.id.nav_leaderboard)//giả xu sử lý log uot
-        {
-            setFragement(new LeaderBoardFragment());
-        }
-        else if(id == R.id.nav_bookmarks){
+        if(id == R.id.nav_bookmarks){
             Intent intent = new Intent(MainActivity.this,BookmarksActivity.class);
             startActivity(intent);
+        }
+        else if(id == R.id.nav_logout){
+            FirebaseAuth.getInstance().signOut();
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this,gso);
+            mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // Xóa các hoạt động trên cùng của ngăn xếp và tạo một nhiệm vụ mới
+                    startActivity(intent); // Bắt đầu hoạt động đăng nhập
+                    finish();
+                }
+            });
         }
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);

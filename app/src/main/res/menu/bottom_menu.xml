@@ -3,13 +3,13 @@
     <item
         android:id="@+id/nav_home_buttonMenu"
         android:icon="@drawable/ic_home_24"
-        android:title="Home"/>
+        android:title="Trang chủ"/>
     <item
         android:id="@+id/nav_leaderboard_buttonMenu"
         android:icon="@drawable/ic_leaderboard"
-        android:title="LeaderBoard"/>
+        android:title="Xếp hạng"/>
     <item
         android:id="@+id/nav_account_buttonMenu"
         android:icon="@drawable/ic_account_circle_24"
-        android:title="Account"/>
+        android:title="Tài khoản"/>
 </menu>

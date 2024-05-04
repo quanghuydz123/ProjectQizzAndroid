@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        btnForgotPassword = findViewById(R.id.btnForgotPassword);
+        btnForgotPassword = findViewById(R.id.txtForgotPassword);
         btnSignUp = findViewById(R.id.btnSIgnUp);
         btnSignInGoogle = findViewById(R.id.btnSignInGoogle);
         mAuth = FirebaseAuth.getInstance();
@@ -90,6 +90,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 googleSignIn();
+            }
+        });
+
+        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                startActivity(intent);
             }
         });
     }
