@@ -159,7 +159,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="24dp"
             android:paddingRight="16dp"
-            android:text="Sign In with Google"
+            android:text="Đăng nhập bằng Google"
             android:textColor="@color/white"
             android:textSize="20dp" />
 

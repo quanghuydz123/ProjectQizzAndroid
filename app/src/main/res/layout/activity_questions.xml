@@ -44,7 +44,7 @@
             android:id="@+id/btn_submitTest"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:text="Submit"
+            android:text="Nộp bải"
             android:layout_weight="1"
             android:background="@drawable/button_border"
             android:backgroundTint="@android:color/holo_orange_light"
@@ -137,18 +137,18 @@
             />
      <Button
          android:id="@+id/btn_clear_sel"
-         android:layout_width="wrap_content"
+         android:layout_width="120dp"
          android:layout_height="36dp"
          android:background="@drawable/button_border"
-         android:text="Clear Selection"
+         android:text="Xóa chọn"
          android:textColor="@color/white"
          />
     <Button
         android:id="@+id/btn_mark"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="36dp"
         android:background="@drawable/button_border"
-        android:text="Mark for Review"
+        android:text="Đánh dấu"
         android:textColor="@color/white"
         android:layout_marginLeft="8dp"
         />

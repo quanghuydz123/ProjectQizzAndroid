@@ -69,7 +69,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="8dp"
-                android:text="Nguyễn Quang huy"
+                android:text="Nguyễn Quang Huy"
+                android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -102,7 +103,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RANK"
+                android:text="Hạng"
                 android:gravity="center"
                 android:textSize="18dp"
                 android:padding="8dp"
@@ -131,7 +132,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OVERALL \nSCORE"
+                android:text="Tổng điểm"
                 android:gravity="center"
                 android:textSize="18dp"
                 android:padding="8dp"

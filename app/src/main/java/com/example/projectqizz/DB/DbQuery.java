@@ -227,6 +227,34 @@ public class DbQuery{
                     }
                 });
     }
+    public static void cancelBookmarks(MyCompleteListener myCompleteListener){
+        WriteBatch batch = g_firestore.batch();
+        Map<String,Object> bmData = new ArrayMap<>();
+        for(int i = 0 ; i < g_bmIdList.size(); i++){
+            bmData.put("BM"+String.valueOf(i+1)+"_ID",g_bmIdList.get(i));
+        }
+        DocumentReference bmDoc = g_firestore.collection("USERS").document(FirebaseAuth.getInstance().getUid())
+                .collection("USER_DATA").document("BOOKMARKS");
+        batch.set(bmDoc,bmData);
+
+        DocumentReference userDoc = g_firestore.collection("USERS").document(FirebaseAuth.getInstance().getUid());
+
+        batch.update(userDoc,"BOOKMARKS",g_bmIdList.size());
+
+        batch.commit()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        myCompleteListener.onSucces();;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        myCompleteListener.onFailure();
+                    }
+                });
+    }
     public static void saveResult(int score, MyCompleteListener myCompleteListener) {
         WriteBatch batch = g_firestore.batch();
 

@@ -101,7 +101,7 @@ public class AccountFragment extends Fragment {
             }
             txt_score.setText("Điểm số: " + DbQuery.myPerformance.getScore());
             if(DbQuery.myPerformance.getScore() != 0){
-                txt_rank.setText("Hạng:" +DbQuery.myPerformance.getRank());
+                txt_rank.setText("Hạng: " +DbQuery.myPerformance.getRank());
             }
         }
         //xử lý đăng xuất

@@ -316,7 +316,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:text="RE-ATTEMPT"
+            android:text="Làm lại"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:elevation="5dp"
@@ -336,7 +336,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:elevation="5dp"
-            android:text="VIEW ANSWERS"
+            android:text="Xem lại bài làm"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>

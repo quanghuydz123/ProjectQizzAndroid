@@ -49,7 +49,7 @@ public class BookmarksActivity extends AppCompatActivity {
         DbQuery.loadBookmarks(new MyCompleteListener() {
             @Override
             public void onSucces() {
-                BookmarkAdapter adapter = new BookmarkAdapter(DbQuery.g_bookmarksList);
+                BookmarkAdapter adapter = new BookmarkAdapter(DbQuery.g_bookmarksList,DbQuery.g_bmIdList);
                 questionView.setAdapter(adapter);
                 progressDialog.dismiss();
             }
