@@ -50,7 +50,29 @@ public class DbQuery{
     public static List<String> g_bmIdList = new ArrayList<>();
     public static List<QuestionModel> g_bookmarksList = new ArrayList<>();
     static int tmp;
+    public static void updateTest(int position,String name,int time,MyCompleteListener myCompleteListener){
+        Map<String,Object> categoryData = new ArrayMap<>();
+        categoryData.put("TEST"+String.valueOf(position+1)+"_NAME",name);
+        categoryData.put("TEST"+String.valueOf(position+1)+"_TIME",time);
 
+        g_firestore.collection("QUIZ").document(g_catList.get(g_selected_cat_index).getDocId()).
+                collection("TESTS_LIST").document("TESTS_INFO").update(categoryData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        g_testList.get(position).setName(name);
+                        g_testList.get(position).setTime(time);
+                        myCompleteListener.onSucces();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        myCompleteListener.onFailure();
+                    }
+                });
+
+    }
     public static void updateCategory(int postion,String name,MyCompleteListener myCompleteListener){
         Map<String,Object> categoryData = new ArrayMap<>();
         categoryData.put("NAME",name);

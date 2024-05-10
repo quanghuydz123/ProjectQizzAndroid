@@ -18,6 +18,8 @@ import com.example.projectqizz.MyCompleteListener;
 import com.example.projectqizz.R;
 import com.example.projectqizz.TestActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class CategoryAdapter extends BaseAdapter {
@@ -92,7 +94,9 @@ public class CategoryAdapter extends BaseAdapter {
         Button btn_cancel = view.findViewById(R.id.btn_cancel);
         Button btn_cofirm = view.findViewById(R.id.btn_comfirm);
         EditText edtNameCategory = view.findViewById(R.id.edt_name_category);
+        TextView txtNoTest = view.findViewById(R.id.txt_no_Test);
         edtNameCategory.setText(DbQuery.g_catList.get(position).getName().toString());
+        txtNoTest.setText(String.valueOf(DbQuery.g_catList.get(position).getNoOfTests()));
         builder.setView(view);
         AlertDialog alertDialog = builder.create();//tạo ra thông báo
         btn_cancel.setOnClickListener(new View.OnClickListener() {
