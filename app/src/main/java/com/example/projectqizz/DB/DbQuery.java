@@ -51,6 +51,26 @@ public class DbQuery{
     public static List<QuestionModel> g_bookmarksList = new ArrayList<>();
     static int tmp;
 
+    public static void updateCategory(int postion,String name,MyCompleteListener myCompleteListener){
+        Map<String,Object> categoryData = new ArrayMap<>();
+        categoryData.put("NAME",name);
+
+        g_firestore.collection("QUIZ").document(g_catList.get(postion).getDocId()).update(categoryData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        g_catList.get(postion).setName(name);
+                        myCompleteListener.onSucces();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        myCompleteListener.onFailure();
+                    }
+                });
+    }
+
     public static void loadBookmarks(MyCompleteListener myCompleteListener){
         g_bookmarksList.clear();
         tmp = 0 ;

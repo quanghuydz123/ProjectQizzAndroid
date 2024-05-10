@@ -1,4 +1,4 @@
-package com.example.projectqizz;
+package com.example.projectqizz.ui.admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +11,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.projectqizz.Adapter.BookmarkAdapter;
+import com.example.projectqizz.Adapter.QuestionManagerAdapter;
+import com.example.projectqizz.BookmarksActivity;
 import com.example.projectqizz.DB.DbQuery;
+import com.example.projectqizz.R;
 
-public class BookmarksActivity extends AppCompatActivity {
+public class ManagerQuestionActivity extends AppCompatActivity {
     private RecyclerView questionView;
     private Toolbar toolbar;
     private Dialog progressDialog;
@@ -24,15 +25,15 @@ public class BookmarksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bookmarks);
+        setContentView(R.layout.activity_manager_question);
         toolbar = findViewById(R.id.bm_toolbar);
         questionView = findViewById(R.id.bm_recyler_view);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle("Câu hỏi đã lưu");
+        getSupportActionBar().setTitle("Quản lý câu hỏi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);// hiện thị thanh quay lại
 
-        progressDialog  = new Dialog(BookmarksActivity.this);//set vòng quay quay
+        progressDialog  = new Dialog(ManagerQuestionActivity.this);//set vòng quay quay
         progressDialog.setContentView(R.layout.dialog_layout);
         progressDialog.setCancelable(false);
         progressDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -40,34 +41,23 @@ public class BookmarksActivity extends AppCompatActivity {
         dialogText.setText("Loading...");
         progressDialog.show();
 
+
+
         //cấu hình recylerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         questionView.setLayoutManager(layoutManager);
 
-        DbQuery.loadBookmarks(new MyCompleteListener() {
-            @Override
-            public void onSucces() {
-                BookmarkAdapter adapter = new BookmarkAdapter(DbQuery.g_bookmarksList,DbQuery.g_bmIdList);
-                questionView.setAdapter(adapter);
-                progressDialog.dismiss();
-            }
 
-            @Override
-            public void onFailure() {
-                progressDialog.dismiss();
-                Toast.makeText(BookmarksActivity.this,"Tải thất bại",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
+        QuestionManagerAdapter adapter = new QuestionManagerAdapter(DbQuery.g_quesList);
+        questionView.setAdapter(adapter);
+        progressDialog.dismiss();
     }
-    //nút mũi tên trên toolbar ấn thoát
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            BookmarksActivity.this.finish();
+            ManagerQuestionActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

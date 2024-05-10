@@ -13,10 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectqizz.DB.DbQuery;
+import com.example.projectqizz.ui.admin.ManagerQuestionActivity;
 
 public class StartTestActivity extends AppCompatActivity {
     private TextView txtCatName,txtTestNo,txtTotalQ,txtBestScore,txtTime;
-    private Button btnStartTest;
+    private Button btnStartTest,btnManagerQuestion;
     private ImageView btnBack;
     private Dialog progressDialog;
     private TextView dialogText;
@@ -32,7 +33,6 @@ public class StartTestActivity extends AppCompatActivity {
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText("Loading...");
         progressDialog.show();
-
         init();
 
         DbQuery.loadQuestions(new MyCompleteListener() {
@@ -49,6 +49,10 @@ public class StartTestActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        if(DbQuery.myProfile.getAdmin() == true){
+            btnManagerQuestion.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setData() {
@@ -67,6 +71,7 @@ public class StartTestActivity extends AppCompatActivity {
         txtTime = findViewById(R.id.txt_st_time);
         btnStartTest = findViewById(R.id.btn_starTest);
         btnBack = findViewById(R.id.btnStBack);
+        btnManagerQuestion = findViewById(R.id.btn_managerQuestion);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +87,13 @@ public class StartTestActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
 
+            }
+        });
+        btnManagerQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartTestActivity.this, ManagerQuestionActivity.class);
+                startActivity(intent);
             }
         });
     }

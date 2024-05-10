@@ -14,12 +14,25 @@
         app:cardCornerRadius="8dp"
 
         >
+        <Button
+            android:id="@+id/btn_update_category"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="Cập nhập"
+            android:background="@drawable/round_corner_button"
+            android:backgroundTint="#EFECEC"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:visibility="invisible"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="vertical"
             android:gravity="center"
             >
+
             <TextView
                 android:id="@+id/category_name"
                 android:layout_width="match_parent"
