@@ -50,6 +50,50 @@ public class DbQuery{
     public static List<String> g_bmIdList = new ArrayList<>();
     public static List<QuestionModel> g_bookmarksList = new ArrayList<>();
     static int tmp;
+    public static void createTest(String name,int time,MyCompleteListener myCompleteListener){
+        int noTest = g_catList.get(g_selected_cat_index).getNoOfTests()+1;
+        Map<String,Object> testData = new ArrayMap<>();
+        testData.put("TEST"+String.valueOf(noTest)+"_ID",g_catList.get(g_selected_cat_index).getDocId()+String.valueOf(noTest));
+        testData.put("TEST"+String.valueOf(noTest)+"_NAME",name);
+        testData.put("TEST"+String.valueOf(noTest)+"_TIME",time);
+
+        g_firestore.collection("QUIZ").document(g_catList.get(g_selected_cat_index).getDocId())
+                .collection("TESTS_LIST").document("TESTS_INFO").set(testData,SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        DocumentReference quizDoc = g_firestore.collection("QUIZ").document(g_catList.get(g_selected_cat_index).getDocId());
+                        quizDoc.update("NO_OF_TESTS", noTest)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        g_testList.add(new TestModel(g_catList.get(g_selected_cat_index).getDocId()+String.valueOf(noTest),
+                                                0,time,name));
+                                        g_catList.get(g_selected_cat_index).setNoOfTests(noTest);
+                                        myCompleteListener.onSucces();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.e("tag2", "Error: " + e.getMessage(), e);
+                                        myCompleteListener.onFailure();
+                                    }
+                                });
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+//                        Log.e("tag1", "Error: " + e.getMessage(), e);
+                        myCompleteListener.onFailure();
+
+                    }
+                });
+
+    }
     public static void createCategory(String name,MyCompleteListener myCompleteListener){
         Map<String,Object> categoryData = new ArrayMap<>();
         categoryData.put("NAME",name);

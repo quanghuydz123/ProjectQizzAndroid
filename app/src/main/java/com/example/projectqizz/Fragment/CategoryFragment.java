@@ -46,6 +46,7 @@ public class CategoryFragment extends Fragment {
             btnCreateCategory.setVisibility(View.VISIBLE);
         }
         CategoryAdapter categoryAdapter = new CategoryAdapter(DbQuery.g_catList);
+        categoryAdapter.notifyDataSetChanged();
         categoryView.setAdapter(categoryAdapter);
 
         btnCreateCategory.setOnClickListener(new View.OnClickListener() {
