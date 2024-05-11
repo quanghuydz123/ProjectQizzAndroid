@@ -28,6 +28,7 @@
             android:background="@drawable/round_corner_button"
             android:backgroundTint="#EFECEC"
             android:textColor="@color/black"
+            android:visibility="gone"
             />
     </LinearLayout>
 

@@ -50,6 +50,34 @@ public class DbQuery{
     public static List<String> g_bmIdList = new ArrayList<>();
     public static List<QuestionModel> g_bookmarksList = new ArrayList<>();
     static int tmp;
+    public static void updateQuestion(int position,String nameQues,String A,String B,String C,String D,int answer,MyCompleteListener myCompleteListener){
+        Map<String,Object> questionData = new ArrayMap<>();
+        questionData.put("QUESTION",nameQues);
+        questionData.put("A",A);
+        questionData.put("B",B);
+        questionData.put("C",C);
+        questionData.put("D",D);
+        questionData.put("ANSWER",answer);
+        g_firestore.collection("Questions").document(g_quesList.get(position).getqID()).update(questionData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        g_quesList.get(position).setQuestion(nameQues);
+                        g_quesList.get(position).setOptionA(A);
+                        g_quesList.get(position).setOptionB(B);
+                        g_quesList.get(position).setOptionC(C);
+                        g_quesList.get(position).setOptionD(D);
+                        g_quesList.get(position).setCorrectAns(answer);
+                        myCompleteListener.onSucces();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        myCompleteListener.onFailure();
+                    }
+                });
+    }
     public static void updateTest(int position,String name,int time,MyCompleteListener myCompleteListener){
         Map<String,Object> categoryData = new ArrayMap<>();
         categoryData.put("TEST"+String.valueOf(position+1)+"_NAME",name);
@@ -384,6 +412,7 @@ public class DbQuery{
                                 isBookmarked=true;
                             }
                             g_quesList.add(new QuestionModel(
+
                                     doc.getId(),
                                     doc.getString("QUESTION"),
                                     doc.getString("A"),

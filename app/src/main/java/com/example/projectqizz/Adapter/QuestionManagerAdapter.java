@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +56,7 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView quesNo, question, optionA, optionB, optionC, optionD, result;
-        private Button btnCancelBm;
+        private Button btnUpdateQuestion;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,10 +68,13 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
             optionC = itemView.findViewById(R.id.txt_option_C);
             optionD = itemView.findViewById(R.id.txt_option_D);
             result = itemView.findViewById(R.id.txtResult);
-            btnCancelBm = itemView.findViewById(R.id.btn_update_question);
+            btnUpdateQuestion = itemView.findViewById(R.id.btn_update_question);
         }
 
         private void setData(int pos, String ques, String A, String B, String C, String D, int correctAns,String qId) {
+            if(DbQuery.myProfile.getAdmin() == true){
+                btnUpdateQuestion.setVisibility(View.VISIBLE);
+            }
             quesNo.setText("Câu hổi số: " + String.valueOf(pos + 1));
             question.setText(ques);
             optionA.setText("A. " + A);
@@ -86,7 +90,7 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
             }else if(correctAns == 4 ){
                 result.setText("Câu trả lời: "+D);
             }
-            btnCancelBm.setOnClickListener(new View.OnClickListener() {
+            btnUpdateQuestion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     handleCancelBm(pos,qId);
@@ -98,11 +102,22 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
         private void handleCancelBm(int pos,String qId) {
             AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());//xây dựng ra 1 thông báo
             builder.setCancelable(true);
-            View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.alert_dialog_layuot, null);
+            View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.form_update_question, null);
             Button btn_cancel = view.findViewById(R.id.btn_cancel);
             Button btn_cofirm = view.findViewById(R.id.btn_comfirm);
-            TextView title = view.findViewById(R.id.content);
-            title.setText("Cập nhập câu hỏi ?");
+            EditText edtNameQues,edtA,edtB,edtC,edtD,edtAnswer;
+            edtNameQues = view.findViewById(R.id.edt_name_question);
+            edtA = view.findViewById(R.id.edt_A);
+            edtB = view.findViewById(R.id.edt_B);
+            edtC = view.findViewById(R.id.edt_C);
+            edtD = view.findViewById(R.id.edt_D);
+            edtAnswer = view.findViewById(R.id.edt_answer);
+            edtNameQues.setText(questionModelList.get(pos).getQuestion().toString());
+            edtA.setText(questionModelList.get(pos).getOptionA().toString());
+            edtB.setText(questionModelList.get(pos).getOptionB().toString());
+            edtC.setText(questionModelList.get(pos).getOptionC().toString());
+            edtD.setText(questionModelList.get(pos).getOptionD().toString());
+            edtAnswer.setText(String.valueOf(questionModelList.get(pos).getCorrectAns()));
             builder.setView(view);
             AlertDialog alertDialog = builder.create();//tạo ra thông báo
             btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +130,23 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
             btn_cofirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        alertDialog.dismiss();
+                    DbQuery.updateQuestion(pos, edtNameQues.getText().toString(), edtA.getText().toString(), edtB.getText().toString(), edtC.getText().toString(),
+                            edtD.getText().toString(), Integer.parseInt(edtAnswer.getText().toString()), new MyCompleteListener() {
+                                @Override
+                                public void onSucces() {
+                                    alertDialog.dismiss();
+                                    notifyDataSetChanged();
+                                    Toast.makeText(itemView.getContext(),"Cập nhập thành công",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure() {
+                                    alertDialog.dismiss();
+                                    Toast.makeText(itemView.getContext(),"Lỗi rồi",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             });
             alertDialog.show();
