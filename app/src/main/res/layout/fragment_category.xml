@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.CategoryFragment">
 
+    <Button
+        android:id="@+id/btn_create_category"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/round_corner_button"
+        android:backgroundTint="#EFECEC"
+        android:text="Thêm danh mục"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/category_Grid"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        />
     <GridView
         android:id="@+id/category_Grid"
         android:layout_width="0dp"
@@ -18,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_create_category"
         app:layout_constraintVertical_bias="0.0"
         android:numColumns="2"
         >

@@ -2,27 +2,29 @@ package com.example.projectqizz.Fragment;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.projectqizz.Adapter.CategoryAdapter;
 import com.example.projectqizz.DB.DbQuery;
 import com.example.projectqizz.MainActivity;
-import com.example.projectqizz.Model.CategoryModel;
+import com.example.projectqizz.MyCompleteListener;
 import com.example.projectqizz.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class CategoryFragment extends Fragment {
 
     private GridView categoryView;
+    private Button btnCreateCategory;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -39,19 +41,73 @@ public class CategoryFragment extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Danh mục");
         categoryView = view.findViewById(R.id.category_Grid);
-        //loadCategories();
+        btnCreateCategory = view.findViewById(R.id.btn_create_category);
+        if(DbQuery.myProfile.getAdmin() == true){
+            btnCreateCategory.setVisibility(View.VISIBLE);
+        }
         CategoryAdapter categoryAdapter = new CategoryAdapter(DbQuery.g_catList);
         categoryView.setAdapter(categoryAdapter);
+
+        btnCreateCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createCategory(categoryAdapter);
+            }
+        });
         return view;
     }
 
-//    private void loadCategories() {
-//        categoryModelList.clear();
-//        categoryModelList.add(new CategoryModel("1","GK",20));
-//        categoryModelList.add(new CategoryModel("2","HISTORY",30));
-//        categoryModelList.add(new CategoryModel("3","ENGLISH",10));
-//        categoryModelList.add(new CategoryModel("4","SCIENCE",25));
-//        categoryModelList.add(new CategoryModel("5","MATHS",20));
-//
-//    }
+    private void createCategory(CategoryAdapter categoryAdapter) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());//xây dựng ra 1 thông báo
+        builder.setCancelable(true);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.form_create_category, null);
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+        Button btn_cofirm = view.findViewById(R.id.btn_comfirm);
+        EditText edtNameCategory = view.findViewById(R.id.edt_name_category);
+        builder.setView(view);
+        AlertDialog alertDialog = builder.create();//tạo ra thông báo
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        btn_cofirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if(validateData()){
+                   DbQuery.createCategory(edtNameCategory.getText().toString(), new MyCompleteListener() {
+                       @Override
+                       public void onSucces() {
+                           categoryAdapter.notifyDataSetChanged();
+                           alertDialog.dismiss();
+                           Toast.makeText(getContext(),"Thêm thành công",
+                                   Toast.LENGTH_SHORT).show();
+                       }
+
+                       @Override
+                       public void onFailure() {
+                           alertDialog.dismiss();
+                           Toast.makeText(getContext(),"Lỗi rồi",
+                                   Toast.LENGTH_SHORT).show();
+                       }
+                   });
+               }
+                
+            }
+
+            private boolean validateData() {
+                if(edtNameCategory.getText().toString().isEmpty()){
+                    edtNameCategory.setError("Hãy nhập tên danh mục !!");
+                    return false;
+                }
+                return true;
+            }
+        });
+        alertDialog.show();
+    }
+
+
+
 }

@@ -50,6 +50,55 @@ public class DbQuery{
     public static List<String> g_bmIdList = new ArrayList<>();
     public static List<QuestionModel> g_bookmarksList = new ArrayList<>();
     static int tmp;
+    public static void createCategory(String name,MyCompleteListener myCompleteListener){
+        Map<String,Object> categoryData = new ArrayMap<>();
+        categoryData.put("NAME",name);
+        categoryData.put("NO_OF_TESTS",0);
+
+
+        DocumentReference quizDoc = g_firestore.collection("QUIZ").document();
+
+        WriteBatch batch = g_firestore.batch();
+
+        batch.set(quizDoc,categoryData);//thêm vào database
+
+
+
+        batch.commit()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String documentId = quizDoc.getId();
+                        g_catList.add(new CategoryModel(documentId,name,0));
+                        quizDoc.update("CAT_ID",documentId);
+                        WriteBatch batch = g_firestore.batch();
+                        DocumentReference countCategory = g_firestore.collection("QUIZ").document("Categories");
+                        batch.update(countCategory,"COUNT", FieldValue.increment(1));
+                        batch.update(countCategory,"CAT"+String.valueOf(g_catList.size())+"_ID",documentId);
+                        batch.commit()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        myCompleteListener.onSucces();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        myCompleteListener.onFailure();
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        myCompleteListener.onFailure();
+                    }
+                });
+
+
+    }
     public static void updateQuestion(int position,String nameQues,String A,String B,String C,String D,int answer,MyCompleteListener myCompleteListener){
         Map<String,Object> questionData = new ArrayMap<>();
         questionData.put("QUESTION",nameQues);
