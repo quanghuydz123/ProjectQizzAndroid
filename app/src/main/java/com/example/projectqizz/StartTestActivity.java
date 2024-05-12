@@ -94,6 +94,7 @@ public class StartTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(StartTestActivity.this, ManagerQuestionActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

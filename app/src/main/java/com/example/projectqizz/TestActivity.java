@@ -58,6 +58,9 @@ public class TestActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         testView.setLayoutManager(layoutManager);
 
+        if(DbQuery.myProfile.getAdmin()== true){
+            btnCreateTest.setVisibility(View.VISIBLE);
+        }
         DbQuery.loadTestData(new MyCompleteListener() {
             @Override
             public void onSucces() {

@@ -50,6 +50,52 @@ public class DbQuery{
     public static List<String> g_bmIdList = new ArrayList<>();
     public static List<QuestionModel> g_bookmarksList = new ArrayList<>();
     static int tmp;
+
+    public static void createQuestion(String nameQues,String A,String B,String C,String D,int answer,MyCompleteListener myCompleteListener){
+        Map<String,Object> questionData = new ArrayMap<>();
+        questionData.put("QUESTION",nameQues);
+        questionData.put("A",A);
+        questionData.put("B",B);
+        questionData.put("C",C);
+        questionData.put("D",D);
+        questionData.put("ANSWER",answer);
+        questionData.put("CATEGORY",g_catList.get(g_selected_cat_index).getDocId());
+        questionData.put("TEST",g_testList.get(g_selected_test_index).getTestID());
+
+        DocumentReference quizDoc = g_firestore.collection("Questions").document();
+
+        WriteBatch batch = g_firestore.batch();
+
+        batch.set(quizDoc,questionData);//thêm vào database
+
+        batch.commit()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        g_quesList.add(new QuestionModel(
+                                quizDoc.getId(),
+                                nameQues,
+                                A,
+                                B,
+                                C,
+                                D,
+                                answer,
+                                -1,
+                                NOT_VISITED,
+                                false
+                        ));
+                        myCompleteListener.onSucces();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        myCompleteListener.onFailure();
+                    }
+                });
+
+
+    }
     public static void createTest(String name,int time,MyCompleteListener myCompleteListener){
         int noTest = g_catList.get(g_selected_cat_index).getNoOfTests()+1;
         Map<String,Object> testData = new ArrayMap<>();

@@ -19,7 +19,21 @@
         >
 
     </androidx.appcompat.widget.Toolbar>
-
+    <Button
+        android:id="@+id/btn_create_question"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/round_corner_button"
+        android:backgroundTint="#EFECEC"
+        android:text="Thêm bài câu hỏi"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/bm_recyler_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bm_toolbar"
+        android:padding="8dp"
+        android:visibility="gone"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bm_recyler_view"
         android:layout_width="0dp"

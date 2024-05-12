@@ -1,32 +1,42 @@
 package com.example.projectqizz.ui.admin;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projectqizz.Adapter.QuestionManagerAdapter;
-import com.example.projectqizz.BookmarksActivity;
 import com.example.projectqizz.DB.DbQuery;
+import com.example.projectqizz.MyCompleteListener;
 import com.example.projectqizz.R;
+import com.example.projectqizz.StartTestActivity;
 
 public class ManagerQuestionActivity extends AppCompatActivity {
     private RecyclerView questionView;
     private Toolbar toolbar;
     private Dialog progressDialog;
     private TextView dialogText;
+    private Button btnCreateQuestion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_question);
         toolbar = findViewById(R.id.bm_toolbar);
+        btnCreateQuestion = findViewById(R.id.btn_create_question);
         questionView = findViewById(R.id.bm_recyler_view);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -40,7 +50,9 @@ public class ManagerQuestionActivity extends AppCompatActivity {
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText("Loading...");
         progressDialog.show();
-
+        if(DbQuery.myProfile.getAdmin() == true){
+            btnCreateQuestion.setVisibility(View.VISIBLE);
+        }
 
 
         //cấu hình recylerView
@@ -52,11 +64,67 @@ public class ManagerQuestionActivity extends AppCompatActivity {
         QuestionManagerAdapter adapter = new QuestionManagerAdapter(DbQuery.g_quesList);
         questionView.setAdapter(adapter);
         progressDialog.dismiss();
+
+        btnCreateQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createQuestion(adapter);
+            }
+        });
+    }
+
+    private void createQuestion(QuestionManagerAdapter adapter) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ManagerQuestionActivity.this);//xây dựng ra 1 thông báo
+        builder.setCancelable(true);
+        View view = LayoutInflater.from(ManagerQuestionActivity.this).inflate(R.layout.form_create_question, null);
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+        Button btn_cofirm = view.findViewById(R.id.btn_comfirm);
+        EditText edtNameQues,edtA,edtB,edtC,edtD,edtAnswer;
+        edtNameQues = view.findViewById(R.id.edt_name_question);
+        edtA = view.findViewById(R.id.edt_A);
+        edtB = view.findViewById(R.id.edt_B);
+        edtC = view.findViewById(R.id.edt_C);
+        edtD = view.findViewById(R.id.edt_D);
+        edtAnswer = view.findViewById(R.id.edt_answer);
+        builder.setView(view);
+        AlertDialog alertDialog = builder.create();//tạo ra thông báo
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        btn_cofirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbQuery.createQuestion(edtNameQues.getText().toString(), edtA.getText().toString(), edtB.getText().toString(), edtC.getText().toString(),
+                        edtD.getText().toString(), Integer.parseInt(edtAnswer.getText().toString()), new MyCompleteListener() {
+                            @Override
+                            public void onSucces() {
+                                alertDialog.dismiss();
+                                adapter.notifyDataSetChanged();
+                                Toast.makeText(ManagerQuestionActivity.this,"Thêm thành công",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure() {
+                                alertDialog.dismiss();
+                                Toast.makeText(ManagerQuestionActivity.this,"Lỗi rồi",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+        alertDialog.show();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home){
+            Intent intent = new Intent(ManagerQuestionActivity.this, StartTestActivity.class);
+            startActivity(intent);
             ManagerQuestionActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
