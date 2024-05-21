@@ -98,33 +98,62 @@ public class ManagerQuestionActivity extends AppCompatActivity {
         btn_cofirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbQuery.createQuestion(edtNameQues.getText().toString(), edtA.getText().toString(), edtB.getText().toString(), edtC.getText().toString(),
-                        edtD.getText().toString(), Integer.parseInt(edtAnswer.getText().toString()), new MyCompleteListener() {
-                            @Override
-                            public void onSucces() {
-                                alertDialog.dismiss();
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(ManagerQuestionActivity.this,"Thêm thành công",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                if(validate()){
+                    DbQuery.createQuestion(edtNameQues.getText().toString(), edtA.getText().toString(), edtB.getText().toString(), edtC.getText().toString(),
+                            edtD.getText().toString(), Integer.parseInt(edtAnswer.getText().toString()), new MyCompleteListener() {
+                                @Override
+                                public void onSucces() {
+                                    alertDialog.dismiss();
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(ManagerQuestionActivity.this,"Thêm thành công",
+                                            Toast.LENGTH_SHORT).show();
+                                }
 
-                            @Override
-                            public void onFailure() {
-                                alertDialog.dismiss();
-                                Toast.makeText(ManagerQuestionActivity.this,"Lỗi rồi",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                @Override
+                                public void onFailure() {
+                                    alertDialog.dismiss();
+                                    Toast.makeText(ManagerQuestionActivity.this,"Lỗi rồi",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            }
+
+            private boolean validate() {
+                if(edtNameQues.getText().toString().isEmpty()){
+                    edtNameQues.setError("Hãy nhập câu hỏi !!");
+                    return false;
+                }
+                if(edtA.getText().toString().isEmpty()){
+                    edtA.setError("Hãy nhập câu trả lời A !!");
+                    return false;
+                }
+                if(edtB.getText().toString().isEmpty()){
+                    edtB.setError("Hãy nhập câu trả lời B !!");
+                    return false;
+                }
+                if(edtC.getText().toString().isEmpty()){
+                    edtC.setError("Hãy nhập câu trả lời C !!");
+                    return false;
+                }
+                if(edtD.getText().toString().isEmpty()){
+                    edtD.setError("Hãy nhập câu trả lời D !!");
+                    return false;
+                }
+                if(edtAnswer.getText().toString().isEmpty()){
+                    edtAnswer.setError("Hãy nhập đán án đúng cho câu trả lời !!");
+                }
+                return true;
             }
         });
+
         alertDialog.show();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            Intent intent = new Intent(ManagerQuestionActivity.this, StartTestActivity.class);
-            startActivity(intent);
             ManagerQuestionActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);

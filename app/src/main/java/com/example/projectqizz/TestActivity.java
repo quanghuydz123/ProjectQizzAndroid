@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.projectqizz.Adapter.TestAdapter;
 import com.example.projectqizz.DB.DbQuery;
+import com.example.projectqizz.ui.admin.ManagerQuestionActivity;
 
 public class TestActivity extends AppCompatActivity {
     private RecyclerView testView;

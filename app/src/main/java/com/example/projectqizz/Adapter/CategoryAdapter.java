@@ -1,5 +1,6 @@
 package com.example.projectqizz.Adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,6 @@ public class CategoryAdapter extends BaseAdapter {
                 DbQuery.g_selected_cat_index = position;
                 Intent intent = new Intent(v.getContext(), TestActivity.class);
                 v.getContext().startActivity(intent);
-
             }
         });
         TextView category_name = myView.findViewById(R.id.category_name);

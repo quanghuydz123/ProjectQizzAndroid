@@ -52,7 +52,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:background="@drawable/circle"
-                android:backgroundTint="@color/grey"
+                android:backgroundTint="#EAE6E6"
                 android:text="45"
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"

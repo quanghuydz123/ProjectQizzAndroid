@@ -25,7 +25,7 @@
         android:layout_height="32dp"
         android:background="@drawable/round_corner_button"
         android:backgroundTint="#EFECEC"
-        android:text="Thêm bài câu hỏi"
+        android:text="Thêm câu hỏi"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/bm_recyler_view"
         app:layout_constraintLeft_toLeftOf="parent"
