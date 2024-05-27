@@ -52,13 +52,14 @@ public class QuestionsActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         questionsView.setLayoutManager(layoutManager);
-
+        //Khởi tạo adapter và truyền cho questionsView
         adapter = new QuestionAdapter(DbQuery.g_quesList);
         questionsView.setAdapter(adapter);
-
+        //Khởi tạo adapter và truyền cho quesListGV
         questionGridAdapter = new QuestionGridAdapter(this,DbQuery.g_quesList.size());
         quesListGV.setAdapter(questionGridAdapter);
-        quesListGV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        quesListGV.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {//xử lý click các item trong danh sách quesListGV
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 goToQuestion(position);
@@ -66,21 +67,24 @@ public class QuestionsActivity extends AppCompatActivity {
         });
         setSnapHelper(); // xử lý cuộn recylerView
         
-        setClickListeners(); // xử lý click qua lại
+        setClickListeners(); // xử lý click
 
         setStartTimer(); // bat dau tinh thoi gian
     }
-    private void goToQuestion(int position){
+    private void goToQuestion(int position)
+    {//Hàm này giúp chuyển tới layout câu hỏi dựa vào position
         questionsView.smoothScrollToPosition(position);
         if(drawerLayout.isDrawerOpen(GravityCompat.END)){
             drawerLayout.closeDrawer(GravityCompat.END);
         }
     }
-    private void setStartTimer() {
+    private void setStartTimer()
+    {//Hàm này xử lý tính thời gian làm bài
         long totalTime = DbQuery.g_testList.get(DbQuery.g_selected_test_index).getTime()*60*1000;
         timer = new CountDownTimer(totalTime + 1000,1000) {
             @Override
-            public void onTick(long remainingTime) {
+            public void onTick(long remainingTime)
+            {//Cập nhập thời gian sau từng giây
                     timeLeft = remainingTime;
                     String time = String.format("%02d:%02d min",
                             TimeUnit.MILLISECONDS.toMinutes(remainingTime),
@@ -91,7 +95,8 @@ public class QuestionsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFinish() {
+            public void onFinish()
+            {//Hàm này được gọi timer < 0 tức là hết thời gian làm bài
                 Intent intent = new Intent(QuestionsActivity.this,ScoreActivity.class);
                 long totalTime = DbQuery.g_testList.get(DbQuery.g_selected_test_index).getTime()*60*1000;
                 intent.putExtra("TIME_TAKEN",totalTime - timeLeft);
@@ -99,11 +104,13 @@ public class QuestionsActivity extends AppCompatActivity {
                 QuestionsActivity.this.finish();
             }
         };
-        timer.start();
+        timer.start();//bắt đầu tính giờ
     }
 
-    private void setClickListeners() {
-        btnPrevQues.setOnClickListener(new View.OnClickListener() {
+    private void setClickListeners()
+    {//Hàm này xử lý các click các button
+        btnPrevQues.setOnClickListener(new View.OnClickListener()
+        {//Hàm này xử lý khi người click icon "<" (để quay lại câu hỏi trước đó)
             @Override
             public void onClick(View v) {
                 if(quesId > 0){
@@ -112,7 +119,8 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         });
 
-        btnNextQues.setOnClickListener(new View.OnClickListener() {
+        btnNextQues.setOnClickListener(new View.OnClickListener()
+        {//Hàm này xử lý khi người click icon ">" (để qua câu hỏi tiếp theo)
             @Override
             public void onClick(View v) {
                 if(quesId < DbQuery.g_quesList.size() -1){
@@ -121,8 +129,8 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         });
 
-        btnClearSel.setOnClickListener(new View.OnClickListener() //loại bỏ câu trả lời
-        {
+        btnClearSel.setOnClickListener(new View.OnClickListener()
+        {//Hàm này xử lý xóa bỏ đáp án người dùng đang chọn
             @Override
             public void onClick(View v) {
                 DbQuery.g_quesList.get(quesId).setSelectedAns(-1);
@@ -132,9 +140,11 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         });
 
-        btnQuesList.setOnClickListener(new View.OnClickListener() {
+        btnQuesList.setOnClickListener(new View.OnClickListener()
+        {//Hàm này xử lý người dùng muốn xem tình trạng câu hỏi (Sau khi click hiện thị drawer layout hiện thị danh sách câu hỏi với tình trạng tương ứng
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 if(!drawerLayout.isDrawerOpen(GravityCompat.END))//GravityCompat.END kéo từ cuối ra ngoài
                 {
                     questionGridAdapter.notifyDataSetChanged();
@@ -143,7 +153,8 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         });
 
-        drawerCloseB.setOnClickListener(new View.OnClickListener() {
+        drawerCloseB.setOnClickListener(new View.OnClickListener()
+        {//Hàm này xử lý đóng drawer layout danh sách tình trạng câu hỏi
             @Override
             public void onClick(View v) {
                 if(drawerLayout.isDrawerOpen(GravityCompat.END)){
@@ -152,8 +163,8 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         });
 
-        btnMark.setOnClickListener(new View.OnClickListener()//đánh dấu câu hỏi
-        {
+        btnMark.setOnClickListener(new View.OnClickListener()
+        {//Hàm này xử lý đánh dấu câu hỏi
             @Override
             public void onClick(View v) {
                 if(markImage.getVisibility() != View.VISIBLE){
@@ -171,14 +182,16 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         });
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        btnSubmit.setOnClickListener(new View.OnClickListener()
+        {//Hàm này sử lý nộp bài khi người dùng ấn nút "Nộp bài"
             @Override
             public void onClick(View v) {
                 submitTest();
             }
         });
 
-        btnBookMark.setOnClickListener(new View.OnClickListener() {
+        btnBookMark.setOnClickListener(new View.OnClickListener()
+        {//Hàm này xử khi người dùng muốn lưu câu hỏi này vào danh sách "câu hỏi đã lưu"
             @Override
             public void onClick(View v) {
                 addToBookmarks();
@@ -186,7 +199,8 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
-    private void addToBookmarks() {
+    private void addToBookmarks()
+    {//Hàm này xử lý lưu câu hỏi vào danh sách "câu hỏi đã lưu" cho người dùng
         if(DbQuery.g_quesList.get(quesId).isBookmarked()){
             DbQuery.g_quesList.get(quesId).setBookmarked(false);
             btnBookMark.setImageResource(R.drawable.twotone_bookmark_24);
@@ -196,7 +210,8 @@ public class QuestionsActivity extends AppCompatActivity {
         }
     }
 
-    private void submitTest(){
+    private void submitTest()
+    {//Hàm này xử lý khi người dùng click vào nút "Nộp bài"
         AlertDialog.Builder builder = new AlertDialog.Builder(QuestionsActivity.this);//xây dựng ra 1 thông báo
         builder.setCancelable(true);
 
@@ -208,19 +223,20 @@ public class QuestionsActivity extends AppCompatActivity {
         builder.setView(view);
 
         AlertDialog alertDialog = builder.create();//tạo ra thông báo
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn nút "No"
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
 
-        btn_cofirm.setOnClickListener(new View.OnClickListener() {
+        btn_cofirm.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn nút "Yes"
             @Override
             public void onClick(View v) {
                 timer.cancel();
                 alertDialog.dismiss();
-
                 Intent intent = new Intent(QuestionsActivity.this,ScoreActivity.class);
                 long totalTime = DbQuery.g_testList.get(DbQuery.g_selected_test_index).getTime()*60*1000;
                 intent.putExtra("TIME_TAKEN",totalTime - timeLeft);
@@ -228,15 +244,19 @@ public class QuestionsActivity extends AppCompatActivity {
                 QuestionsActivity.this.finish();
             }
         });
-        alertDialog.show();
+        alertDialog.show();//Hiện thị ra thông báo
     }
     private void setSnapHelper() {
+        //Đoạn mã này tạo một đối tượng PagerSnapHelper và gắn nó vào RecyclerView có tên là questionsView.
+        //PagerSnapHelper giúp tự động cuộn tới mục gần nhất và căn giữa mục đó khi người dùng dừng cuộn.
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(questionsView);
 
-        questionsView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        questionsView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
+            {//Hàm này lắng nghe sự kiện cuộn qua lại trong danh sách questionsView để cập nhập trạng thái câu hỏi tương ứng
                 super.onScrollStateChanged(recyclerView, newState);
 
                 View view = snapHelper.findSnapView(recyclerView.getLayoutManager());
@@ -259,13 +279,15 @@ public class QuestionsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
+            {//Hàm này xử lý theo dõi các thay đổi vị trí cuộn
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
 
     private void init(){
+        //Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java
         questionsView = findViewById(R.id.questions_view);
         txtQuesID = findViewById(R.id.txt_quesId);
         txtTimer = findViewById(R.id.txt_timer);

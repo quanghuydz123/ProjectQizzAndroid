@@ -69,7 +69,7 @@ public class AccountFragment extends Fragment {
         progressDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText("Loading...");
-
+        //set value rank và score cho người dùng
         if(DbQuery.g_usersList.size() == 0 )
         {
             progressDialog.show();
@@ -110,6 +110,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                //Xử lý đăng xuất google
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.default_web_client_id))
                         .requestEmail()
@@ -127,21 +128,24 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        btn_bookmark.setOnClickListener(new View.OnClickListener() {
+        btn_bookmark.setOnClickListener(new View.OnClickListener()
+        {//Xử lý chuyển qua giao diện "Danh sách câu hỏi đã lưu" của người dùng
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), BookmarksActivity.class);
                 startActivity(intent);
             }
         });
-        btn_profile.setOnClickListener(new View.OnClickListener() {
+        btn_profile.setOnClickListener(new View.OnClickListener()
+        {//Xử lý chuyển qua giao diện thông tin các nhân của người dùng
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MyProfileActivity.class);
                 startActivity(intent);
             }
         });
-        btn_leader.setOnClickListener(new View.OnClickListener() {
+        btn_leader.setOnClickListener(new View.OnClickListener()
+        {//Xử lý chuyển qua giao diện danh sách bảng xếp hạng
             @Override
             public void onClick(View v) {
                 bottomNavigationView.setSelectedItemId(R.id.nav_leaderboard_buttonMenu);
@@ -150,12 +154,8 @@ public class AccountFragment extends Fragment {
         });
         return view;
     }
-//    private void setFragement(Fragment categoryFragment) {
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(main_frame.getId(),categoryFragment);//main_frame là frame thay thế
-//        fragmentTransaction.commit();
-//    }
     public void init(View view){
+        //Hàm này khởi tạo các thành phần giao diện từ View được truyền vào
         btnLogout = view.findViewById(R.id.btn_logout);
         txt_image_profile = view.findViewById(R.id.txt_image_profile);
         txt_name = view.findViewById(R.id.txt_name_account);
@@ -168,6 +168,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void calculateRank() {
+        //Hàm này tính toán và đặt thứ hạng cho người dùng
         int lowTopScore = DbQuery.g_usersList.get(DbQuery.g_usersList.size()-1).getScore();
         int remaining_slots = DbQuery.g_usersCount - 100;
         int mySlot = (DbQuery.myPerformance.getScore()*remaining_slots)/lowTopScore;

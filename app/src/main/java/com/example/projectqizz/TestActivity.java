@@ -41,6 +41,7 @@ public class TestActivity extends AppCompatActivity {
         testView = findViewById(R.id.test_recyler_view);
         toolbar = findViewById(R.id.toolbar);
         btnCreateTest = findViewById(R.id.btn_create_test);
+        //Khỏi tạo toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(DbQuery.g_catList.get(DbQuery.g_selected_cat_index).getName());
@@ -62,13 +63,15 @@ public class TestActivity extends AppCompatActivity {
         if(DbQuery.myProfile.getAdmin()== true){
             btnCreateTest.setVisibility(View.VISIBLE);
         }
+
+        //Gọi hàm tải các thông tin về các bài kiểm trả và hiện thị lên giao diện
         DbQuery.loadTestData(new MyCompleteListener() {
             @Override
             public void onSucces() {
                 DbQuery.loadMyScore(new MyCompleteListener() {
                     @Override
                     public void onSucces() {
-                        // truyền đata và recly view
+                        //khợi tạo adapter và truyền vào testView
                         testAdapter = new TestAdapter(DbQuery.g_testList);
                         testView.setAdapter(testAdapter);
                         progressDialog.dismiss();
@@ -92,7 +95,8 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        btnCreateTest.setOnClickListener(new View.OnClickListener() {
+        btnCreateTest.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "Thêm bài kiểm tra"
             @Override
             public void onClick(View v) {
                 createTest(testAdapter);
@@ -101,7 +105,8 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    private void createTest(TestAdapter testAdapter) {
+    private void createTest(TestAdapter testAdapter)
+    {//Hàm này xử lý thêm bài kiểm tra và lưu xuống database
         AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);//xây dựng ra 1 thông báo
         builder.setCancelable(true);
         View view = LayoutInflater.from(TestActivity.this).inflate(R.layout.form_create_test, null);
@@ -111,17 +116,20 @@ public class TestActivity extends AppCompatActivity {
         EditText edtTimeTest = view.findViewById(R.id.edt_time_test_create);
         builder.setView(view);
         AlertDialog alertDialog = builder.create();//tạo ra thông báo
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn "Hủy"
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
 
-        btn_cofirm.setOnClickListener(new View.OnClickListener() {
+        btn_cofirm.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn "Hủy"
             @Override
             public void onClick(View v) {
                 if(validateData()) {
+                    //Gọi hàm xử lý lưu thông tin bài kiểm tra vừa thêm vào trong database
                     DbQuery.createTest(edtNameTest.getText().toString(), Integer.parseInt(edtTimeTest.getText().toString()), new MyCompleteListener() {
                         @Override
                         public void onSucces() {
@@ -142,7 +150,8 @@ public class TestActivity extends AppCompatActivity {
 
             }
 
-            private boolean validateData() {
+            private boolean validateData()
+            {//Hàm này xử lý kiểm tra dữ liệu đầu vào khi người dùng thêm bài kiểm tra có bỏ trống hay không
                 if(edtNameTest.getText().toString().isEmpty()){
                     edtNameTest.setError("Hãy nhập tên tên bài kiểm tra !!");
                     return false;
@@ -158,9 +167,9 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-    //nút mũi tên trên toolbar ấn thoát
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
         if(item.getItemId() == android.R.id.home){
             TestActivity.this.finish();
         }

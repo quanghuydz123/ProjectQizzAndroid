@@ -25,8 +25,9 @@ public class BookmarksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
-        toolbar = findViewById(R.id.bm_toolbar);
         questionView = findViewById(R.id.bm_recyler_view);
+        //Khởi tạo toolbar
+        toolbar = findViewById(R.id.bm_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle("Câu hỏi đã lưu");
@@ -44,10 +45,11 @@ public class BookmarksActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         questionView.setLayoutManager(layoutManager);
-
+        ////Gọi hàm xử lý lấy danh sách những câu hỏi đã lưu của người dùng trong database
         DbQuery.loadBookmarks(new MyCompleteListener() {
             @Override
             public void onSucces() {
+                //Khởi tạo adapter và truyền adapter cho questionView
                 BookmarkAdapter adapter = new BookmarkAdapter(DbQuery.g_bookmarksList,DbQuery.g_bmIdList);
                 questionView.setAdapter(adapter);
                 progressDialog.dismiss();
@@ -65,7 +67,8 @@ public class BookmarksActivity extends AppCompatActivity {
     }
     //nút mũi tên trên toolbar ấn thoát
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
         if(item.getItemId() == android.R.id.home){
             BookmarksActivity.this.finish();
         }

@@ -20,22 +20,25 @@ import com.example.projectqizz.R;
 
 import java.util.List;
 
-public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManagerAdapter.ViewHolder>{
+public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManagerAdapter.ViewHolder>
+        //Tạo một RecyclerView Adapter cho quản lý danh sách câu hỏi ở mỗi bài kiểm tra
+{
     private List<QuestionModel> questionModelList;
+    //khai báo constructor QuestionManagerAdapter
 
     public QuestionManagerAdapter(List<QuestionModel> questionModelList) {
         this.questionModelList = questionModelList;
     }
 
     @NonNull
-    @Override
+    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới
     public QuestionManagerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manager_question_item_layout,parent,false);//tạo view
         return new QuestionManagerAdapter.ViewHolder(view);
     }
 
 
-    @Override
+    @Override//Gán dữ liệu từ questionModelList vào ViewHolder
     public void onBindViewHolder(@NonNull QuestionManagerAdapter.ViewHolder holder, int position) {
         String qId = questionModelList.get(position).getqID();
         String ques = questionModelList.get(position).getQuestion();
@@ -45,11 +48,12 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
         String D = questionModelList.get(position).getOptionD();
 //        int selected = questionModelList.get(position).getSelectedAns();
         int result = questionModelList.get(position).getCorrectAns();
+        //Gọi hàm setData của ViewHolder để cập nhật dữ liệu cho view
         holder.setData(position,ques,A,B,C,D,result,qId);
 
     }
 
-    @Override
+    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là số lượng câu hỏi
     public int getItemCount() {
         return questionModelList.size();
     }
@@ -58,7 +62,8 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
         private TextView quesNo, question, optionA, optionB, optionC, optionD, result;
         private Button btnUpdateQuestion;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView)
+        {//ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ manager_question_item_layout
             super(itemView);
 
             quesNo = itemView.findViewById(R.id.txt_quesNo);
@@ -71,7 +76,8 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
             btnUpdateQuestion = itemView.findViewById(R.id.btn_update_question);
         }
 
-        private void setData(int pos, String ques, String A, String B, String C, String D, int correctAns,String qId) {
+        private void setData(int pos, String ques, String A, String B, String C, String D, int correctAns,String qId)
+        {//Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào
             if(DbQuery.myProfile.getAdmin() == true){
                 btnUpdateQuestion.setVisibility(View.VISIBLE);
             }
@@ -90,16 +96,18 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
             }else if(correctAns == 4 ){
                 result.setText("Câu trả lời: "+D);
             }
-            btnUpdateQuestion.setOnClickListener(new View.OnClickListener() {
+            btnUpdateQuestion.setOnClickListener(new View.OnClickListener()
+            {//Xử lý khi người ấn vào nút "Cập nhật" ở mỗi câu hỏi
                 @Override
                 public void onClick(View v) {
-                    handleCancelBm(pos,qId);
+                    handleUpdateQuestion(pos,qId);
                 }
             });
 
         }
 
-        private void handleCancelBm(int pos,String qId) {
+        private void handleUpdateQuestion(int pos,String qId)
+        {//Xử lý cập nhật câu hỏi
             AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());//xây dựng ra 1 thông báo
             builder.setCancelable(true);
             View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.form_update_question, null);
@@ -120,23 +128,26 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
             edtAnswer.setText(String.valueOf(questionModelList.get(pos).getCorrectAns()));
             builder.setView(view);
             AlertDialog alertDialog = builder.create();//tạo ra thông báo
-            btn_cancel.setOnClickListener(new View.OnClickListener() {
+            btn_cancel.setOnClickListener(new View.OnClickListener()
+            {//Xử lý khi người dùng ấn vào nút "Hủy"
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
                 }
             });
 
-            btn_cofirm.setOnClickListener(new View.OnClickListener() {
+            btn_cofirm.setOnClickListener(new View.OnClickListener()
+            {//Xử lý khi người án vào nút "Cập nhật"
                 @Override
                 public void onClick(View v) {
+                    //Thực hiện gọi hàm xử lý lưu xuống database
                     DbQuery.updateQuestion(pos, edtNameQues.getText().toString(), edtA.getText().toString(), edtB.getText().toString(), edtC.getText().toString(),
                             edtD.getText().toString(), Integer.parseInt(edtAnswer.getText().toString()), new MyCompleteListener() {
                                 @Override
                                 public void onSucces() {
                                     alertDialog.dismiss();
                                     notifyDataSetChanged();
-                                    Toast.makeText(itemView.getContext(),"Cập nhập thành công",
+                                    Toast.makeText(itemView.getContext(),"Cập nhật thành công",
                                             Toast.LENGTH_SHORT).show();
                                 }
 
@@ -149,7 +160,7 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
                             });
                 }
             });
-            alertDialog.show();
+            alertDialog.show();//Hiện khi ra thông báo
         }
     }
 

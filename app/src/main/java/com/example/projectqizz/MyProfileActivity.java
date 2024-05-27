@@ -41,9 +41,8 @@ public class MyProfileActivity extends AppCompatActivity {
         btn_save = findViewById(R.id.btn_save_pf);
         txt_profile = findViewById(R.id.txt_profile);
         btn_layout = findViewById(R.id.btn_layout);
-
+        //Khởi tạo toolbar
         toolbar = findViewById(R.id.toolbar_pf);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle("Hồ sơ của tôi");
@@ -56,23 +55,26 @@ public class MyProfileActivity extends AppCompatActivity {
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText("Updating Data...");
 
-        disableEditing();
+        disableEditing();//Hàm này xử lý load thông tin người và disable input không cho người dùng chỉnh sửa nếu chưa ấn nút "Edit"
 
-        btn_edit.setOnClickListener(new View.OnClickListener() {
+        btn_edit.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "Edit"
             @Override
             public void onClick(View v) {
                 enalbleEditing();
             }
         });
 
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "Hủy"
             @Override
             public void onClick(View v) {
                 disableEditing();
             }
         });
 
-        btn_save.setOnClickListener(new View.OnClickListener() {
+        btn_save.setOnClickListener(new View.OnClickListener()
+        {//Sử lý khi người dùng click vào nút "Lưu"
             @Override
             public void onClick(View v) {
                 if(validate()){
@@ -81,7 +83,8 @@ public class MyProfileActivity extends AppCompatActivity {
             }
         });
     }
-    private boolean validate(){
+    private boolean validate()
+    {//Check dữ liệu đầu vào xem coi người dùng có bỏ trống không
         nameStr = edtName.getText().toString();
         phoneStr = edtPhone.getText().toString();
 
@@ -97,12 +100,14 @@ public class MyProfileActivity extends AppCompatActivity {
         }
         return true;
     }
-    private void saveData(){
+    private void saveData()
+    {//Hàm này sử lý cập nhật thông tin vừa chỉnh sửa vào database
         progressDialog.show();
 
         if(phoneStr.isEmpty()){
             phoneStr=null;
         }
+        //Gọi hàm xử lý cập nhập thông tin người dùng vào database
         DbQuery.saveProfileData(nameStr, phoneStr, new MyCompleteListener() {
             @Override
             public void onSucces() {
@@ -120,14 +125,16 @@ public class MyProfileActivity extends AppCompatActivity {
             }
         });
     }
-    private void enalbleEditing() {
+    private void enalbleEditing()
+    {//Hàm này xử lý cho phép người dùng chỉnh sửa thông tin trong các input
         edtName.setEnabled(true);
         edtPhone.setEnabled(true);
         //edtEmail.setEnabled(true);
         btn_layout.setVisibility(View.VISIBLE);
     }
 
-    private void disableEditing() {
+    private void disableEditing()
+    {//Hàm này xử lý disable các input không cho người dùng chỉnh sửa và hiện thị thông tin người dùng
         edtName.setEnabled(false);
         edtPhone.setEnabled(false);
         edtEmail.setEnabled(false);
@@ -146,9 +153,9 @@ public class MyProfileActivity extends AppCompatActivity {
         txt_profile.setText(firstLetter);
     }
 
-    //nút mũi tên trên toolbar ấn thoát
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
         if(item.getItemId() == android.R.id.home){
             MyProfileActivity.this.finish();
         }

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private GoogleSignInClient mGoogleSignInClient;
     private FrameLayout main_frame;
     private  BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() //xử lý click botton navigation view
+            new BottomNavigationView.OnNavigationItemSelectedListener() //xử lý click item trên button navigation view
             {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView = findViewById(R.id.botton_nav_bar);
         main_frame = findViewById(R.id.main_frame);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);//gọi hàm để xứ lý
-
+        //Khởi tạo một drawer layout
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this,drawerLayout,toolbar,R.string.nav_dwar_open,R.string.nav_dwar_close);
@@ -91,7 +91,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void loadInfoUser(NavigationView navigationView) {
+    private void loadInfoUser(NavigationView navigationView)
+    {//Hàm này để load và hiện thị thông tin người dùng lên drawer
         drawerProfileName = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_name);
         drawerProfileEmail = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_email);
         drawerProfileText = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_text);
@@ -105,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerProfileText.setText(firstLetter);
     }
 
-    private void setFragement(Fragment categoryFragment) {
+    private void setFragement(Fragment categoryFragment)
+    {//Hàm xử lý chuyển đổi qua lại giữa các fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(main_frame.getId(),categoryFragment);//main_frame là frame thay thế
         fragmentTransaction.commit();
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
-    {
+    {//xử lý click các item trên drawer layout
         int id = item.getItemId();
         if(id == R.id.nav_bookmarks){
             Intent intent = new Intent(MainActivity.this,BookmarksActivity.class);

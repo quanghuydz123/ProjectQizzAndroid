@@ -62,14 +62,15 @@ public class LoginActivity extends AppCompatActivity {
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText(" Signing in...");
 
-        //Login Google
+        //thiết lập cấu hình cho đăng nhập Google và tạo một đối tượng khách hàng GoogleSignInClient để bắt đầu quá trình đăng nhập
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "Đăng nhập"
             @Override
             public void onClick(View v) {
                 if(validateData()){
@@ -78,22 +79,26 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        btnSignUp.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "Đăng ký"
             @Override
             public void onClick(View v) {
+                //Chuyển sang giao diện đăng ký
                 Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
                 startActivity(intent);
             }
         });
 
-        btnSignInGoogle.setOnClickListener(new View.OnClickListener() {
+        btnSignInGoogle.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "Đăng nhập bằng google"
             @Override
             public void onClick(View v) {
                 googleSignIn();
             }
         });
 
-        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+        btnForgotPassword.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "SIGN UP"
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
@@ -102,7 +107,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void googleSignIn() {
+    private void googleSignIn()
+    {//khởi động quá trình đăng nhập bằng Google
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent,RC_SIGN_IN);
     }
@@ -124,7 +130,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-    private void firebaseAuthWithGoogle(String idToken){
+    private void firebaseAuthWithGoogle(String idToken)
+    {//Hàm xử lý login bằng google
         progressDialog.show();
         AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(firebaseCredential)
@@ -140,14 +147,16 @@ public class LoginActivity extends AppCompatActivity {
                             {
                                 Toast.makeText(LoginActivity.this,"Đăng nhập google thành công",
                                         Toast.LENGTH_SHORT).show();
+                                //Sau khi login mà thành công thì sẽ gọi hàm sử lý lương thông tin người dùng vào database
                                 DbQuery.createUserData(user.getEmail(), user.getDisplayName(), new MyCompleteListener() {
                                     @Override
                                     public void onSucces() {
+                                        //Gọi hàm xử lý lấy những thông tin cần thiết để load app
                                         DbQuery.loadData(new MyCompleteListener() {
                                             @Override
                                             public void onSucces() {
                                                 progressDialog.dismiss();
-
+                                                //Chuyển đến giao diện chính của app
                                                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                                 startActivity(intent);
                                                 LoginActivity.this.finish();
@@ -176,7 +185,9 @@ public class LoginActivity extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                            }else{
+                            }else
+                            {//Xử lý nếu như người dùng đã từng đăng nhập bằng tài khoản google trước đó
+                                //Gọi hàm xử lý lấy những thông tin cần thiết để load app
                                 DbQuery.loadData(new MyCompleteListener() {
                                     @Override
                                     public void onSucces() {
@@ -205,8 +216,10 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-    private void login() {
+    private void login()
+    {//Hàm xử lý login bằng tài khoản mật khẩu
         progressDialog.show();//hiện thị họp thoai vòng vòng
+        //Check tài khoản mật khẩu bằng hàm signInWithEmailAndPassword
         mAuth.signInWithEmailAndPassword(edtEmail.getText().toString().trim(), edtPassword.getText().toString().trim())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -214,11 +227,12 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công",
                                     Toast.LENGTH_SHORT).show();
-
+                            //Nếu như đăng nhập thành công thì gọi hàm xử lý lấy thông tin cần thiết để load app
                             DbQuery.loadData(new MyCompleteListener() { //load tất cả category lên main
                                 @Override
                                 public void onSucces() {
                                     progressDialog.dismiss();
+                                    //Chuyển đến giao diện chính của app
                                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -227,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure() {
                                     progressDialog.dismiss();
-                                    Toast.makeText(LoginActivity.this,"Tải danh mục bị lỗi rồi",
+                                    Toast.makeText(LoginActivity.this,"Tải thất bại",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -242,7 +256,8 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private boolean validateData() {
+    private boolean validateData()
+    {//Hàm này xử lý check dữ liệu đầu vào xem coi người dùng có bỏ trống không
         if(edtEmail.getText().toString().isEmpty()){
             edtEmail.setError("Enter E-Mail ID");
             return false;

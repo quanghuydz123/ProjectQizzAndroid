@@ -13,21 +13,22 @@ import com.example.projectqizz.R;
 
 import java.util.List;
 
-public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHolder> {
+public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHolder>
+    //Tạo một RecyclerView Adapter cho danh sách câu trả lời khi người dùng làm bài xong
+{
     private List<QuestionModel> questionModelList;
-
+    //khai báo constructor AnswersAdapter
     public AnswersAdapter(List<QuestionModel> questionModelList) {
         this.questionModelList = questionModelList;
     }
-
     @NonNull
-    @Override
+    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới
     public AnswersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.answer_item_layout,parent,false);//tạo view
         return new AnswersAdapter.ViewHolder(view);
     }
 
-    @Override
+    @Override//Gán dữ liệu từ questionModelList vào ViewHolder
     public void onBindViewHolder(@NonNull AnswersAdapter.ViewHolder holder, int position) {
         String ques = questionModelList.get(position).getQuestion();
         String A = questionModelList.get(position).getOptionA();
@@ -36,16 +37,19 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
         String D = questionModelList.get(position).getOptionD();
         int selected = questionModelList.get(position).getSelectedAns();
         int result = questionModelList.get(position).getCorrectAns();
+        //Gọi hàm setData của ViewHolder để cập nhật dữ liệu cho view
         holder.setData(position,ques,A,B,C,D,selected,result);
 
     }
 
-    @Override
+    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là số lượng câu hỏi
     public int getItemCount() {
         return questionModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder
+     //ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ answer_item_layout
+    {
         private TextView quesNo,question,optionA,optionB,optionC,optionD,result;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,7 +63,9 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
 
         }
 
-        private void setData(int pos,String ques,String A,String B,String C,String D,int selected,int correctAns){
+        private void setData(int pos,String ques,String A,String B,String C,String D,int selected,int correctAns)
+        //Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào.
+        {
             quesNo.setText("Câu hổi số: " + String.valueOf(pos+1));
             question.setText(ques);
             optionA.setText("A. "+A);
@@ -87,23 +93,9 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
             }
 
         }
-        private void setOptionColor(int selected, int color) {
-//            switch (selected){
-//                case 1:
-//                    optionA.setTextColor(itemView.getContext().getResources().getColor(color));
-//                    break;
-//                case 2:
-//                    optionB.setTextColor(itemView.getContext().getResources().getColor(color));
-//                    break;
-//                case 3:
-//                    optionC.setTextColor(itemView.getContext().getResources().getColor(color));
-//                    break;
-//                case 4:
-//                    optionD.setTextColor(itemView.getContext().getResources().getColor(color));
-//                    break;
-//                default:
-//
-//            }
+        private void setOptionColor(int selected, int color)
+        //Đổi màu sắc chữ dựa trên lựa chọn của người dùng (đúng xanh,sai đỏ)
+        {
             if(selected == 1){
                 optionA.setTextColor(itemView.getContext().getResources().getColor(color));
             }else{

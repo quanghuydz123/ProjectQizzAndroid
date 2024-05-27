@@ -32,7 +32,7 @@ public class ScoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
-
+        //Khởi tạo toolbar
         toolbar = findViewById(R.id.toolbarScore);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -49,11 +49,12 @@ public class ScoreActivity extends AppCompatActivity {
 
         init();
 
-        loadData();
+        loadData();//Tải các thông tin hiện cần thiết để hiện thị trong app
 
-        setBookMarks();
+        setBookMarks();//Xử lý thêm những câu hỏi người dùng đã muốn lưu trong lúc làm bài vào danh sách
 
-        btnViewAns.setOnClickListener(new View.OnClickListener() {
+        btnViewAns.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click "Xem lại bài làm" (hiện thị danh sách câu hỏi và đáp án mà người dùng đã chọn)
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ScoreActivity.this,AnswersActivity.class);
@@ -61,7 +62,8 @@ public class ScoreActivity extends AppCompatActivity {
             }
         });
 
-        btnReAttempt.setOnClickListener(new View.OnClickListener() {
+        btnReAttempt.setOnClickListener(new View.OnClickListener()
+        {//Hàm này xử lý khi người dùng click "Làm lại" (Chuyển đến giao diện làm lại bài làm)
             @Override
             public void onClick(View v) {
                 for(int i = 0 ;i<DbQuery.g_quesList.size(); i++){
@@ -77,7 +79,8 @@ public class ScoreActivity extends AppCompatActivity {
         saveResult();
     }
 
-    private void setBookMarks() {
+    private void setBookMarks()
+    {//Hàm này xử lý thêm câu hỏi người dùng muốn lưu vào danh sách g_bmIdList
         for (int i = 0 ; i < DbQuery.g_quesList.size() ; i++){
             if(DbQuery.g_quesList.get(i).isBookmarked()){
                 if(!DbQuery.g_bmIdList.contains(DbQuery.g_quesList.get(i).getqID())){
@@ -93,16 +96,18 @@ public class ScoreActivity extends AppCompatActivity {
         }
     }
 
-    //nút mũi tên trên toolbar ấn thoát
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    { //Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
         if(item.getItemId() == android.R.id.home){
             ScoreActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveResult() {
+    private void saveResult()
+    {//Hàm này xử lý cập nhập điểm của bài kiểm tra này vào database (Chỉ lấy điểm cao nhất)
+        //Gọi hàm xử lý cập nhập điểm bài kiểm tra vào database
         DbQuery.saveResult(finalScore, new MyCompleteListener() {
             @Override
             public void onSucces() {
@@ -118,7 +123,8 @@ public class ScoreActivity extends AppCompatActivity {
         });
     }
 
-    public void init(){
+    public void init()
+    {//Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java
         txtScore = findViewById(R.id.txt_score);
         txtTime = findViewById(R.id.txt_time);
         txtTotalQ = findViewById(R.id.txt_totalQ);
@@ -130,7 +136,8 @@ public class ScoreActivity extends AppCompatActivity {
         btnViewAns = findViewById(R.id.btn_view_answers);
 
     }
-    public void loadData(){
+    public void loadData()
+    {//Hàm này xử lý load các thông tin liên quan hiện thi lên layout (điểm số,số câu làm sai,số câu làm đúng,...)
         int correctQ = 0,wrongQ = 0,unanttempQ = 0;
         for(int i = 0 ; i < DbQuery.g_quesList.size() ; i++){
             if(DbQuery.g_quesList.get(i).getSelectedAns() == -1){

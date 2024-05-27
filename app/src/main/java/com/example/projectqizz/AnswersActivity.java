@@ -25,9 +25,9 @@ public class AnswersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answers);
-
-        toolbar = findViewById(R.id.aa_toolbar);
         answersView = findViewById(R.id.test_recyler_view);
+        //khởi tạo toolbar
+        toolbar = findViewById(R.id.aa_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle("Xem lại câu trả lời");
@@ -37,7 +37,7 @@ public class AnswersActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         answersView.setLayoutManager(layoutManager);
-
+        //truyền adapter cho answersView
         AnswersAdapter answersAdapter = new AnswersAdapter(DbQuery.g_quesList);
         answersView.setAdapter(answersAdapter);
 
@@ -45,7 +45,8 @@ public class AnswersActivity extends AppCompatActivity {
     }
     //nút mũi tên trên toolbar ấn thoát
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
         if(item.getItemId() == android.R.id.home){
             AnswersActivity.this.finish();
         }

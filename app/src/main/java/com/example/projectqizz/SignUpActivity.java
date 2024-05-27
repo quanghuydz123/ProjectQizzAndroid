@@ -54,14 +54,16 @@ public class SignUpActivity extends AppCompatActivity {
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText("Registering user...");
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào icon "<--" (quay lai giao diện trước đó)
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        btnSignUp.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click "Đăng ký"
             @Override
             public void onClick(View v) {
                 if(validate())
@@ -70,7 +72,8 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-        btnLoginNow.setOnClickListener(new View.OnClickListener() {
+        btnLoginNow.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click "Login Now"
             @Override
             public void onClick(View v) {
                 finish();
@@ -78,7 +81,8 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validate() {
+    private boolean validate()
+    {//Kiểm tra dữ liệu đầu xem sao người dùng có bỏ trống không,mật khẩu nhập lại có đúng không
         nameStr = edtFullName.getText().toString().trim();
         passStr = edtPassword.getText().toString().trim();
         emailStr = edtEmail.getText().toString().trim();
@@ -103,9 +107,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void signNewUser() //hàm đăng ký user
-    {
+    private void signNewUser()
+    {//Xử lý thêm user đăng ký vào database
         progressDialog.show();//hiêện thi vòng quay
+        //dùng Firebase Authentication trong Android và được sử dụng để đăng ký một người dùng mới
         mAuth.createUserWithEmailAndPassword(emailStr, passStr)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -113,7 +118,8 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                             Toast.makeText(SignUpActivity.this,"Đăng ký thành công",Toast.LENGTH_SHORT).show();
-                            DbQuery.createUserData(emailStr,nameStr,new MyCompleteListener(){ //thêm vào database
+                            //Nếu đăng ký thành công gọi tạo xử lý thêm thông tin đăng ký vào trong dabatase
+                            DbQuery.createUserData(emailStr,nameStr,new MyCompleteListener(){
                                 @Override
                                 public void onSucces() {
                                     progressDialog.dismiss();//ẩn đi

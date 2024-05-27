@@ -23,30 +23,31 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class CategoryAdapter extends BaseAdapter {
+public class CategoryAdapter extends BaseAdapter
+{    //Tạo một Adapter  cho danh sách câu trả lời khi người dùng làm bài xong
 
     private List<CategoryModel> categoryModelList;
-
+    //khai báo constructor CategoryAdapter
     public CategoryAdapter(List<CategoryModel> categoryModelList) {
         this.categoryModelList = categoryModelList;
     }
 
-    @Override
+    @Override//Trả về số lượng phần tử trong danh sách categoryModelList
     public int getCount() {
         return categoryModelList.size();
     }
 
-    @Override
+    @Override//Trả về đối tượng tại vị trí position trong danh sách
     public Object getItem(int position) {
         return null;
     }
 
-    @Override
+    @Override//Trả về ID của đối tượng tại vị trí position trong danh sách
     public long getItemId(int position) {
         return 0;
     }
 
-    @Override
+    @Override//Tạo và trả về một View cho một phần tử trong danh sách
     public View getView(int position, View convertView, ViewGroup parent) {
         View myView;
         if(convertView == null)
@@ -57,7 +58,7 @@ public class CategoryAdapter extends BaseAdapter {
             myView = convertView;
         }
 
-        //set click tung item
+        //Set xử lý click từng item trong danh sách
         myView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +77,8 @@ public class CategoryAdapter extends BaseAdapter {
         category_name.setText(categoryModelList.get(position).getName());
         noOfTests.setText(String.valueOf(categoryModelList.get(position).getNoOfTests())+" Tests"); // ép kiểu string
 
-        btnUpdateCategory.setOnClickListener(new View.OnClickListener() {
+        btnUpdateCategory.setOnClickListener(new View.OnClickListener()
+        {//xử lý khi người dùng vào nút "Cập nhật" ở mỗi danh mục
             @Override
             public void onClick(View v) {
                 updateCategory(myView,position);
@@ -87,7 +89,8 @@ public class CategoryAdapter extends BaseAdapter {
         return myView;
     }
 
-    private void updateCategory(View myView,int position) {
+    private void updateCategory(View myView,int position)
+    {//Hàm xử lý cập nhật danh mục
         AlertDialog.Builder builder = new AlertDialog.Builder(myView.getContext());//xây dựng ra 1 thông báo
         builder.setCancelable(true);
         View view = LayoutInflater.from(myView.getContext()).inflate(R.layout.form_update_category, null);
@@ -99,22 +102,25 @@ public class CategoryAdapter extends BaseAdapter {
         txtNoTest.setText(String.valueOf(DbQuery.g_catList.get(position).getNoOfTests()));
         builder.setView(view);
         AlertDialog alertDialog = builder.create();//tạo ra thông báo
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn nút "Hủy"
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
 
-        btn_cofirm.setOnClickListener(new View.OnClickListener() {
+        btn_cofirm.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn nút "Cập nhật"
             @Override
             public void onClick(View v) {
+                //Xử lý lưu thông tin cập nhật xuống database
                 DbQuery.updateCategory(position, edtNameCategory.getText().toString(), new MyCompleteListener() {
                     @Override
                     public void onSucces() {
                         alertDialog.dismiss();
                         notifyDataSetChanged();
-                        Toast.makeText(myView.getContext(),"Cập nhập thành công",
+                        Toast.makeText(myView.getContext(),"Cập nhật thành công",
                                 Toast.LENGTH_SHORT).show();
                     }
 
@@ -127,7 +133,7 @@ public class CategoryAdapter extends BaseAdapter {
                 });
             }
         });
-        alertDialog.show();
+        alertDialog.show();//Hiện khi ra thông báo
     }
 
 }

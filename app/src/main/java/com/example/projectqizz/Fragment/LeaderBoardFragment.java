@@ -54,17 +54,18 @@ public class LeaderBoardFragment extends Fragment {
         dialogText.setText("Loading...");
         progressDialog.show();
 
-
+        //cấu hình RecyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         usersView.setLayoutManager(linearLayoutManager);
-
+        //set adapter cho usersView
         rankAdapter = new RankAdapter(DbQuery.g_usersList);
         usersView.setAdapter(rankAdapter);
-
+        //gọi hàm xử lý lấy danh sách người dùng xếp từ cao đến thấp
         DbQuery.getTopUsers(new MyCompleteListener() {
             @Override
             public void onSucces() {
+                //Phương thức này sẽ cập nhập lại giá trị rankAdapter
                 rankAdapter.notifyDataSetChanged();
 
                 if(DbQuery.myPerformance.getScore() != 0 ){
@@ -94,6 +95,7 @@ public class LeaderBoardFragment extends Fragment {
     }
 
     private void calculateRank() {
+        //Hàm này tính toán và đặt thứ hạng cho người dùng
         int lowTopScore = DbQuery.g_usersList.get(DbQuery.g_usersList.size()-1).getScore();
         int remaining_slots = DbQuery.g_usersCount - 100;
         int mySlot = (DbQuery.myPerformance.getScore()*remaining_slots)/lowTopScore;
@@ -108,6 +110,7 @@ public class LeaderBoardFragment extends Fragment {
     }
 
     private void init(View view){
+        //Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java
         txtTotalUser = view.findViewById(R.id.txt_total_user);
         txtMyImageText = view.findViewById(R.id.txt_image_leader);
         txtMyScore = view.findViewById(R.id.txt_totalScore_leader);

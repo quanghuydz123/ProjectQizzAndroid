@@ -49,7 +49,8 @@ public class CategoryFragment extends Fragment {
         categoryAdapter.notifyDataSetChanged();
         categoryView.setAdapter(categoryAdapter);
 
-        btnCreateCategory.setOnClickListener(new View.OnClickListener() {
+        btnCreateCategory.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "Thêm danh mục"
             @Override
             public void onClick(View v) {
                 createCategory(categoryAdapter);
@@ -58,7 +59,8 @@ public class CategoryFragment extends Fragment {
         return view;
     }
 
-    private void createCategory(CategoryAdapter categoryAdapter) {
+    private void createCategory(CategoryAdapter categoryAdapter)
+    {//Hàm xử lý thêm danh mục
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());//xây dựng ra 1 thông báo
         builder.setCancelable(true);
         View view = LayoutInflater.from(getContext()).inflate(R.layout.form_create_category, null);
@@ -67,18 +69,22 @@ public class CategoryFragment extends Fragment {
         EditText edtNameCategory = view.findViewById(R.id.edt_name_category);
         builder.setView(view);
         AlertDialog alertDialog = builder.create();//tạo ra thông báo
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn vào nút "Hủy"
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
 
-        btn_cofirm.setOnClickListener(new View.OnClickListener() {
+        btn_cofirm.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng click vào nút "Thêm"
             @Override
             public void onClick(View v) {
                if(validateData()){
-                   DbQuery.createCategory(edtNameCategory.getText().toString(), new MyCompleteListener() {
+                   //Gọi hàm xử lý thêm thông tin danh muc vào database
+                   DbQuery.createCategory(edtNameCategory.getText().toString(), new MyCompleteListener()
+                   {
                        @Override
                        public void onSucces() {
                            categoryAdapter.notifyDataSetChanged();
@@ -98,7 +104,8 @@ public class CategoryFragment extends Fragment {
                 
             }
 
-            private boolean validateData() {
+            private boolean validateData()
+            {//Kiểm tra dữ liệu người dùng nhập vào có bỏ trống không
                 if(edtNameCategory.getText().toString().isEmpty()){
                     edtNameCategory.setError("Hãy nhập tên danh mục !!");
                     return false;

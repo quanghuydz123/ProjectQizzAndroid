@@ -35,9 +35,10 @@ public class ManagerQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_question);
-        toolbar = findViewById(R.id.bm_toolbar);
         btnCreateQuestion = findViewById(R.id.btn_create_question);
         questionView = findViewById(R.id.bm_recyler_view);
+        //Khỏi tạo tool bar
+        toolbar = findViewById(R.id.bm_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle("Quản lý câu hỏi");
@@ -60,12 +61,13 @@ public class ManagerQuestionActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         questionView.setLayoutManager(layoutManager);
 
-
+        //set adpater cho questionView
         QuestionManagerAdapter adapter = new QuestionManagerAdapter(DbQuery.g_quesList);
         questionView.setAdapter(adapter);
         progressDialog.dismiss();
 
-        btnCreateQuestion.setOnClickListener(new View.OnClickListener() {
+        btnCreateQuestion.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn vào nút "Thêm câu hỏi"
             @Override
             public void onClick(View v) {
                 createQuestion(adapter);
@@ -73,7 +75,8 @@ public class ManagerQuestionActivity extends AppCompatActivity {
         });
     }
 
-    private void createQuestion(QuestionManagerAdapter adapter) {
+    private void createQuestion(QuestionManagerAdapter adapter)
+    {//Hàm xử lý thêm câu hỏi
         AlertDialog.Builder builder = new AlertDialog.Builder(ManagerQuestionActivity.this);//xây dựng ra 1 thông báo
         builder.setCancelable(true);
         View view = LayoutInflater.from(ManagerQuestionActivity.this).inflate(R.layout.form_create_question, null);
@@ -88,17 +91,20 @@ public class ManagerQuestionActivity extends AppCompatActivity {
         edtAnswer = view.findViewById(R.id.edt_answer);
         builder.setView(view);
         AlertDialog alertDialog = builder.create();//tạo ra thông báo
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn nút "Hủy" trong thông báo
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
 
-        btn_cofirm.setOnClickListener(new View.OnClickListener() {
+        btn_cofirm.setOnClickListener(new View.OnClickListener()
+        {//Xử lý khi người dùng ấn nút "Thêm" trong thông báo
             @Override
             public void onClick(View v) {
                 if(validate()){
+                    //Gọi hàm xử lý để thêm thông tin câu hỏi xuống database
                     DbQuery.createQuestion(edtNameQues.getText().toString(), edtA.getText().toString(), edtB.getText().toString(), edtC.getText().toString(),
                             edtD.getText().toString(), Integer.parseInt(edtAnswer.getText().toString()), new MyCompleteListener() {
                                 @Override
@@ -119,7 +125,8 @@ public class ManagerQuestionActivity extends AppCompatActivity {
                 }
             }
 
-            private boolean validate() {
+            private boolean validate()
+            {//Kiểm tra dữ liệu người dùng nhập vào có bỏ trống không
                 if(edtNameQues.getText().toString().isEmpty()){
                     edtNameQues.setError("Hãy nhập câu hỏi !!");
                     return false;
@@ -147,12 +154,13 @@ public class ManagerQuestionActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.show();
+        alertDialog.show();//Hiện thị ra dialog để người dùng nhập tin câu hỏi cần thêm
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
         if(item.getItemId() == android.R.id.home){
             ManagerQuestionActivity.this.finish();
         }

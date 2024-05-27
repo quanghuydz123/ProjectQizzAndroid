@@ -29,23 +29,16 @@ public class SplashActivity extends AppCompatActivity {
 
 //        Typeface typeface = ResourcesCompat.getFont(this,R.font.TheBlacklist);//tạo phone chữ
 //        app_name.setTypeface(typeface);
-
+        //Tạo 1 chuyển động
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.myamin);
         app_name.setAnimation(animation);
 
         mAuth = FirebaseAuth.getInstance();
 
         DbQuery.g_firestore = FirebaseFirestore.getInstance();// kết nối database
-//        FirebaseUser user = mAuth.getCurrentUser(); Log.d giống như console.log
-//        if (user != null) {
-//            String email = user.getEmail();
-//            Log.d("MyTag", "Email của người dùng: " + email);
-//        } else {
-//            Log.d("MyTag", "Người dùng hiện chưa đăng nhập");
-//        }
 
 
-
+        //Sử lý hiện hình layout Slapsh trong 3s và chuyển đến layout login hoặc layout main
         new Thread(){//sau 3 giay chuyển sang Main activity
             public void run(){
                 try {
@@ -56,6 +49,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 if(mAuth.getCurrentUser() != null)//kiểm tra đã đăng nhập hay chưa
                 {
+                    //Nếu như đã đăng nhập sẽ gọi hàm tải thông tin liên quan để hiện thị và chuyển đến main activity
                     DbQuery.loadData(new MyCompleteListener() {
                         @Override
                         public void onSucces() {
@@ -70,10 +64,9 @@ public class SplashActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-//                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//                    SplashActivity.this.finish();
-                }else{
+
+                }else
+                {//Nếu chưa đăng nhập thì chuyển đến login activity
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                     SplashActivity.this.finish();

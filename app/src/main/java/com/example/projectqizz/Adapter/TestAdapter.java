@@ -24,34 +24,38 @@ import com.example.projectqizz.StartTestActivity;
 
 import java.util.List;
 
-public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
+public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder>
+        //Tạo một RecyclerView Adapter cho danh sách các bài kiểm tra theo danh mục
+{
     private List<TestModel> testModelList;
-
+    //khai báo constructor TestAdapter
     public TestAdapter(List<TestModel> testModelList) {
         this.testModelList = testModelList;
     }
 
     @NonNull
-    @Override
+    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới
     public TestAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.test_item_layuot,parent,false);//tạo view
         return new ViewHolder(view);
     }
 
-    @Override
+    @Override//Gán dữ liệu từ questionModelList vào ViewHolder
     public void onBindViewHolder(@NonNull TestAdapter.ViewHolder holder, int position)
     {
         int progress = testModelList.get(position).getTopScore();
         holder.setData(position,progress);
     }
 
-    @Override
+    @Override//Phương thức này trả về số lượng phần tử trong testModelList tức là số lượng bài kiểm tra
     public int getItemCount() {
         return testModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder
+            //ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ test_item_layuot
+    {
         private TextView testNo;
         private TextView topSroce;
         private ProgressBar progressBar;
@@ -67,6 +71,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
 
         }
         public void setData(int pos,int progress)
+        //Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào.
         {
             //set value cho item view
             testNo.setText(DbQuery.g_testList.get(pos).getName());
@@ -85,7 +90,8 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
                 }
             });
 
-            btnUpdateTest.setOnClickListener(new View.OnClickListener() {
+            btnUpdateTest.setOnClickListener(new View.OnClickListener()
+            {//Xử lý khi người dùng click vào nút "Cập nhật" ở mỗi bài kiểm tra
                 @Override
                 public void onClick(View v) {
                     updateTest(pos);
@@ -93,7 +99,8 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
             });
         }
 
-        private void updateTest(int pos) {
+        private void updateTest(int pos)
+        {//Xử lý cập nhập bài kiểm tra
             AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());//xây dựng ra 1 thông báo
             builder.setCancelable(true);
             View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.form_update_test, null);
@@ -106,16 +113,19 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
             edtTime.setText(String.valueOf(DbQuery.g_testList.get(pos).getTime()));
             builder.setView(view);
             AlertDialog alertDialog = builder.create();//tạo ra thông báo
-            btn_cancel.setOnClickListener(new View.OnClickListener() {
+            btn_cancel.setOnClickListener(new View.OnClickListener()
+            {//Xử lý khi người dùng ấn vào nút "Hủy"
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
                 }
             });
 
-            btn_cofirm.setOnClickListener(new View.OnClickListener() {
+            btn_cofirm.setOnClickListener(new View.OnClickListener()
+            {//Xử lý khi người dùng ấn vào nút "Cập nhật"
                 @Override
                 public void onClick(View v) {
+                    //Gọi hàm xử lý lưu thông tin cập nhật xuống database
                     DbQuery.updateTest(pos, edtName.getText().toString(), Integer.parseInt(edtTime.getText().toString()), new MyCompleteListener() {
                         @Override
                         public void onSucces() {
@@ -134,7 +144,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
                     });
                 }
             });
-            alertDialog.show();
+            alertDialog.show();//Hiện khi ra thông báo
         }
     }
 }
