@@ -37,7 +37,7 @@ public class ManagerQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manager_question);
         btnCreateQuestion = findViewById(R.id.btn_create_question);
         questionView = findViewById(R.id.bm_recyler_view);
-        //Khỏi tạo tool bar
+        //Khỏi tạo tool bar - Nguyễn Quang Huy
         toolbar = findViewById(R.id.bm_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -56,18 +56,18 @@ public class ManagerQuestionActivity extends AppCompatActivity {
         }
 
 
-        //cấu hình recylerView
+        //cấu hình recylerView - Nguyễn Quang Huy
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         questionView.setLayoutManager(layoutManager);
 
-        //set adpater cho questionView
+        //set adpater cho questionView - Nguyễn Quang Huy
         QuestionManagerAdapter adapter = new QuestionManagerAdapter(DbQuery.g_quesList);
         questionView.setAdapter(adapter);
         progressDialog.dismiss();
 
         btnCreateQuestion.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng ấn vào nút "Thêm câu hỏi"
+        {//Xử lý khi người dùng ấn vào nút "Thêm câu hỏi" - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 createQuestion(adapter);
@@ -76,7 +76,7 @@ public class ManagerQuestionActivity extends AppCompatActivity {
     }
 
     private void createQuestion(QuestionManagerAdapter adapter)
-    {//Hàm xử lý thêm câu hỏi
+    {//Hàm xử lý thêm câu hỏi - Nguyễn Quang Huy
         AlertDialog.Builder builder = new AlertDialog.Builder(ManagerQuestionActivity.this);//xây dựng ra 1 thông báo
         builder.setCancelable(true);
         View view = LayoutInflater.from(ManagerQuestionActivity.this).inflate(R.layout.form_create_question, null);
@@ -126,7 +126,7 @@ public class ManagerQuestionActivity extends AppCompatActivity {
             }
 
             private boolean validate()
-            {//Kiểm tra dữ liệu người dùng nhập vào có bỏ trống không
+            {//Kiểm tra dữ liệu người dùng nhập vào có bỏ trống không - Nguyễn Quang Huy
                 if(edtNameQues.getText().toString().isEmpty()){
                     edtNameQues.setError("Hãy nhập câu hỏi !!");
                     return false;
@@ -160,7 +160,7 @@ public class ManagerQuestionActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó) - Nguyễn Quang Huy
         if(item.getItemId() == android.R.id.home){
             ManagerQuestionActivity.this.finish();
         }

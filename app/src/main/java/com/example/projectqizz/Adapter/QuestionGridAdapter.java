@@ -15,30 +15,30 @@ import com.example.projectqizz.QuestionsActivity;
 import com.example.projectqizz.R;
 
 public class QuestionGridAdapter extends BaseAdapter
-{  //Tạo một Adapter cho danh sách câu hỏi cho người dùng theo dõi tình trạng từng câu hỏi trong bài làm
+{  //Tạo một Adapter cho danh sách câu hỏi cho người dùng theo dõi tình trạng từng câu hỏi trong bài làm - Nguyễn Quang Huy
     private int numOfQues;
     private Context context;
-    //khai báo constructor QuestionGridAdapter
+    //khai báo constructor QuestionGridAdapter - Nguyễn Quang Huy
     public QuestionGridAdapter(Context context,int numOfQues) {
         this.numOfQues = numOfQues; this.context=context;
     }
 
-    @Override//Trả về số lượng phần tử trong danh sách QuestionGridAdapter
+    @Override//Trả về số lượng phần tử trong danh sách QuestionGridAdapter - Nguyễn Quang Huy
     public int getCount() {
         return numOfQues;
     }
 
-    @Override//Trả về đối tượng tại vị trí position trong danh sách
+    @Override//Trả về đối tượng tại vị trí position trong danh  - Nguyễn Quang Huy
     public Object getItem(int position) {
         return null;
     }
 
-    @Override//Trả về ID của đối tượng tại vị trí position trong danh sách
+    @Override//Trả về ID của đối tượng tại vị trí position trong danh sách - Nguyễn Quang Huy
     public long getItemId(int position) {
         return 0;
     }
 
-    @Override//Tạo và trả về một View cho một phần tử trong danh sách
+    @Override//Tạo và trả về một View cho một phần tử trong danh sách - Nguyễn Quang Huy
     public View getView(final int position, View convertView, ViewGroup parent) {
         View myView;
         if(convertView == null){
@@ -58,7 +58,7 @@ public class QuestionGridAdapter extends BaseAdapter
         TextView quesTV = myView.findViewById(R.id.txt_ques_num);
         quesTV.setText(String.valueOf(position + 1));
         switch (DbQuery.g_quesList.get(position).getStatus())
-        {//Dựa vào status ở mỗi câu hỏi set background color tương ứng
+        {//Dựa vào status ở mỗi câu hỏi set background color tương ứng - Nguyễn Quang Huy
             case DbQuery.NOT_VISITED:
                 quesTV.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(myView.getContext(),R.color.grey)));
                 break;

@@ -15,23 +15,23 @@ import com.example.projectqizz.R;
 import java.util.List;
 
 public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder>
-        //Tạo một RecyclerView Adapter cho danh sách xếp hạng người dùng
+        //Tạo một RecyclerView Adapter cho danh sách xếp hạng người dùng - Bành Viết Hùng
 {
 
     private List<RankModel> userList;
-    //khai báo constructor AnswersAdapter
+    //khai báo constructor AnswersAdapter - Bành Viết Hùng
     public RankAdapter(List<RankModel> userList) {
         this.userList = userList;
     }
 
     @NonNull
-    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới
+    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới - Bành Viết Hùng
     public RankAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.rank_item_layout,parent,false);
         return new ViewHolder(view);
     }
 
-    @Override//Gán dữ liệu từ questionModelList vào ViewHolder
+    @Override//Gán dữ liệu từ questionModelList vào ViewHolder - Bành Viết Hùng
     public void onBindViewHolder(@NonNull RankAdapter.ViewHolder holder, int position) {
         String name = userList.get(position).getName();
         int score = userList.get(position).getScore();
@@ -42,7 +42,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder>
 
     @Override
     public int getItemCount()
-    {//Hàm này trả về số lượng người dùng giới hạn chỉ hiện 100 tối đa người dùng trên bảng xếp hàng
+    {//Hàm này trả về số lượng người dùng giới hạn chỉ hiện 100 tối đa người dùng trên bảng xếp hàng - Bành Viết Hùng
         if(userList.size() > 100){
             return 100;
         }else{
@@ -51,7 +51,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder>
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
-    {//ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ rank_item_layout
+    {//ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ rank_item_layout - Bành Viết Hùng
         private TextView txt_name,txt_rank,txt_score,txt_image;
 
         public ViewHolder(@NonNull View itemView) {
@@ -65,12 +65,12 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder>
         }
 
         private void setData(String name,int score,int rank)
-        {//Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào.
+        {//Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào. - Bành Viết Hùng
             txt_name.setText(name);
             txt_score.setText("Điểm số: " + score);
             txt_rank.setText("Hạng: "+rank);
             String[] parts = name.split(" ");
-            String lastName = parts[parts.length - 1]; // Lấy từ cuối cùng trong tên
+            String lastName = parts[parts.length - 1]; // Lấy từ cuối cùng trong tên - Bành Viết Hùng
             String firstLetter = lastName.toUpperCase().substring(0, 1);
             txt_image.setText(firstLetter);
 

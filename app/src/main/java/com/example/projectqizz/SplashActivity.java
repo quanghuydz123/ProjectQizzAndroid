@@ -24,11 +24,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        //Nguyễn Quang Huy
         app_name = findViewById(R.id.app_name);
 
-//        Typeface typeface = ResourcesCompat.getFont(this,R.font.TheBlacklist);//tạo phone chữ
-//        app_name.setTypeface(typeface);
+
         //Tạo 1 chuyển động
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.myamin);
         app_name.setAnimation(animation);
@@ -38,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         DbQuery.g_firestore = FirebaseFirestore.getInstance();// kết nối database
 
 
-        //Sử lý hiện hình layout Slapsh trong 3s và chuyển đến layout login hoặc layout main
+        //Sử lý hiện hình layout Slapsh trong 3s và chuyển đến layout login hoặc layout main - Nguyễn Quang Huy
         new Thread(){//sau 3 giay chuyển sang Main activity
             public void run(){
                 try {
@@ -66,7 +65,7 @@ public class SplashActivity extends AppCompatActivity {
                     });
 
                 }else
-                {//Nếu chưa đăng nhập thì chuyển đến login activity
+                {//Nếu chưa đăng nhập thì chuyển đến login activity - Nguyễn Quang Huy
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                     SplashActivity.this.finish();

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private GoogleSignInClient mGoogleSignInClient;
     private FrameLayout main_frame;
     private  BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() //xử lý click item trên button navigation view
+            new BottomNavigationView.OnNavigationItemSelectedListener() //xử lý click item trên button navigation view - Nguyễn Quang Huy
             {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void loadInfoUser(NavigationView navigationView)
-    {//Hàm này để load và hiện thị thông tin người dùng lên drawer
+    {//Hàm này để load và hiện thị thông tin người dùng lên drawer - Nguyễn Quang Huy
         drawerProfileName = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_name);
         drawerProfileEmail = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_email);
         drawerProfileText = navigationView.getHeaderView(0).findViewById(R.id.nav_drawer_text);
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setFragement(Fragment categoryFragment)
-    {//Hàm xử lý chuyển đổi qua lại giữa các fragment
+    {//Hàm xử lý chuyển đổi qua lại giữa các fragment - Nguyễn Quang Huy
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(main_frame.getId(),categoryFragment);//main_frame là frame thay thế
         fragmentTransaction.commit();
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
-    {//xử lý click các item trên drawer layout
+    {//xử lý click các item trên drawer layout - Nguyễn Quang Huy
         int id = item.getItemId();
         if(id == R.id.nav_bookmarks){
             Intent intent = new Intent(MainActivity.this,BookmarksActivity.class);

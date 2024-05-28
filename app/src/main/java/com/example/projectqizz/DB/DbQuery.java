@@ -52,7 +52,7 @@ public class DbQuery{
     static int tmp;
 
     public static void createQuestion(String nameQues,String A,String B,String C,String D,int answer,MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý thêm câu hỏi vào database
+    {//Hàm này xử lý thêm câu hỏi vào database - Nguyễn Quang Huy
         Map<String,Object> questionData = new ArrayMap<>();
         questionData.put("QUESTION",nameQues);
         questionData.put("A",A);
@@ -98,7 +98,7 @@ public class DbQuery{
 
     }
     public static void createTest(String name,int time,MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý thêm bài kiểm tra vào database
+    {//Hàm này xử lý thêm bài kiểm tra vào database - Nguyễn Quang Huy
         int noTest = g_catList.get(g_selected_cat_index).getNoOfTests()+1;
         Map<String,Object> testData = new ArrayMap<>();
         testData.put("TEST"+String.valueOf(noTest)+"_ID",g_catList.get(g_selected_cat_index).getDocId()+String.valueOf(noTest));
@@ -143,7 +143,7 @@ public class DbQuery{
 
     }
     public static void createCategory(String name,MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý thêm danh mục vào database
+    {//Hàm này xử lý thêm danh mục vào database - Nguyễn Quang Huy
         Map<String,Object> categoryData = new ArrayMap<>();
         categoryData.put("NAME",name);
         categoryData.put("NO_OF_TESTS",0);
@@ -193,7 +193,7 @@ public class DbQuery{
 
     }
     public static void updateQuestion(int position,String nameQues,String A,String B,String C,String D,int answer,MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý cập nhật câu hỏi vào database
+    {//Hàm này xử lý cập nhật câu hỏi vào database - Nguyễn Quang Huy
         Map<String,Object> questionData = new ArrayMap<>();
         questionData.put("QUESTION",nameQues);
         questionData.put("A",A);
@@ -222,7 +222,7 @@ public class DbQuery{
                 });
     }
     public static void updateTest(int position,String name,int time,MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý cập nhật bài kiểm tra vào database
+    {//Hàm này xử lý cập nhật bài kiểm tra vào database - Nguyễn Quang Huy
         Map<String,Object> categoryData = new ArrayMap<>();
         categoryData.put("TEST"+String.valueOf(position+1)+"_NAME",name);
         categoryData.put("TEST"+String.valueOf(position+1)+"_TIME",time);
@@ -246,7 +246,7 @@ public class DbQuery{
 
     }
     public static void updateCategory(int postion,String name,MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý cập nhật danh mục vào database
+    {//Hàm này xử lý cập nhật danh mục vào database - Nguyễn Quang Huy
         Map<String,Object> categoryData = new ArrayMap<>();
         categoryData.put("NAME",name);
 
@@ -267,7 +267,7 @@ public class DbQuery{
     }
 
     public static void loadBookmarks(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý tải danh sách câu hỏi đã lưu của người dùng
+    {//Hàm này xử lý tải danh sách câu hỏi đã lưu của người dùng - Nguyễn Quang Huy
         g_bookmarksList.clear();
         tmp = 0 ;
         if(g_bmIdList.size() == 0 ){
@@ -312,7 +312,7 @@ public class DbQuery{
     }
 
     public static void loadBmIds(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý tải tất cả ID câu hỏi mà người dùng đã lưu
+    {//Hàm này xử lý tải tất cả ID câu hỏi mà người dùng đã lưu - Nguyễn Quang Huy
         g_bmIdList.clear();
 
         g_firestore.collection("USERS").document(FirebaseAuth.getInstance().getUid())
@@ -339,7 +339,7 @@ public class DbQuery{
     }
 
     public static void getTopUsers(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý tải danh sách điểm của người dùng
+    {//Hàm này xử lý tải danh sách điểm của người dùng - Bành Viết Hùng
         g_usersList.clear();
 
         String myUID = FirebaseAuth.getInstance().getUid();
@@ -376,7 +376,7 @@ public class DbQuery{
                 });
     }
     public static void getUserCount(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý đếm số lượng người dùng
+    {//Hàm này xử lý đếm số lượng người dùng - Bành Viết Hùng
         g_firestore.collection("USERS").document("TOTAL_USERS").get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -393,7 +393,7 @@ public class DbQuery{
                 });
     }
     public static void saveProfileData(String name, String phone, MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý cập nhập thông tin người dùng
+    {//Hàm này xử lý cập nhập thông tin người dùng - Nguyễn Quang Huy
         Map<String,Object> profileData = new ArrayMap<>();
         profileData.put("NAME",name);
         if(phone != null){
@@ -419,7 +419,7 @@ public class DbQuery{
                 });
     }
     public static void loadMyScore(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý tải tổng điểm số của người dùng
+    {//Hàm này xử lý tải tổng điểm số của người dùng - Nguyễn Quang Huy
         g_firestore.collection("USERS").document(FirebaseAuth.getInstance().getUid())
                 .collection("USER_DATA").document("MY_SCORES")
                 .get()
@@ -445,7 +445,7 @@ public class DbQuery{
                 });
     }
     public static void cancelBookmarks(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý hủy lưu câu hỏi trong danh sách "Câu hỏi đã lưu" của người dùng
+    {//Hàm này xử lý hủy lưu câu hỏi trong danh sách "Câu hỏi đã lưu" của người dùng - Nguyễn Quang Huy
         WriteBatch batch = g_firestore.batch();
         Map<String,Object> bmData = new ArrayMap<>();
         for(int i = 0 ; i < g_bmIdList.size(); i++){
@@ -474,7 +474,7 @@ public class DbQuery{
                 });
     }
     public static void saveResult(int score, MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý cập nhập điểm người dùng sau khi hoàn thành bài làm
+    {//Hàm này xử lý cập nhập điểm người dùng sau khi hoàn thành bài làm - Nguyễn Quang Huy
         WriteBatch batch = g_firestore.batch();
 
         //BookMarks
@@ -547,7 +547,7 @@ public class DbQuery{
     }
 
     public static void loadQuestions(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý tải danh sách câu hỏi theo danh mục và tên bài kiểm tra
+    {//Hàm này xử lý tải danh sách câu hỏi theo danh mục và tên bài kiểm tra - Bành Viết Hùng
         g_quesList.clear();
         g_firestore.collection("Questions")
                 .whereEqualTo("CATEGORY",g_catList.get(g_selected_cat_index).getDocId())
@@ -586,7 +586,7 @@ public class DbQuery{
                 });
     }
     public static void getUserData(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý tải tất cả thông tin người dùng khi đăng nhập vào hệ thống
+    {//Hàm này xử lý tải tất cả thông tin người dùng khi đăng nhập vào hệ thống - Bành Viết Hùng
         g_firestore.collection("USERS").document(FirebaseAuth.getInstance().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -614,7 +614,7 @@ public class DbQuery{
     }
 
     public static void createUserData(String email, String name, MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý thêm thông tin người dùng vào database
+    {//Hàm này xử lý thêm thông tin người dùng vào database - Bành Viết Hùng
         Map<String,Object> userData = new ArrayMap<>();
         userData.put("EMAIL_ID",email);
         userData.put("NAME",name);
@@ -648,7 +648,7 @@ public class DbQuery{
     }
 
     public static void loadCategories(MyCompleteListener myCompleteListener)//lấy tất cả category
-    {//Hàm này xử lý tải danh sách danh mục
+    {//Hàm này xử lý tải danh sách danh mục - Bành Viết Hùng
         g_catList.clear();
 
         g_firestore.collection("QUIZ").get() //lấy ta all doccument
@@ -687,7 +687,7 @@ public class DbQuery{
     }
 
     public  static  void loadTestData(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý tải danh sách bài kiểm tra theo danh mục
+    {//Hàm này xử lý tải danh sách bài kiểm tra theo danh mục - Bành Viết Hùng
         g_testList.clear();
 
         g_firestore.collection("QUIZ").document(g_catList.get(g_selected_cat_index).getDocId())
@@ -718,7 +718,7 @@ public class DbQuery{
 
     }
     public static void loadData(MyCompleteListener myCompleteListener)
-    {//Hàm này xử lý load các thông tin như (Danh mục,thông tin người dùng,số lượng người dùng)
+    {//Hàm này xử lý load các thông tin như (Danh mục,thông tin người dùng,số lượng người dùng) - Bành Viết Hùng
         loadCategories(new MyCompleteListener()
         {
             @Override

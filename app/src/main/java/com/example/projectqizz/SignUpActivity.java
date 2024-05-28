@@ -37,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
+        // - Bành Viết Hùng
         edtFullName = findViewById(R.id.edtUserNameSignup);
         edtEmail = findViewById(R.id.edtEmailSignup);
         edtPassword = findViewById(R.id.edtPasswordSignup);
@@ -55,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
         dialogText.setText("Registering user...");
 
         btnBack.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào icon "<--" (quay lai giao diện trước đó)
+        {//Xử lý khi người dùng click vào icon "<--" (quay lai giao diện trước đó) - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 finish();
@@ -63,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         btnSignUp.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click "Đăng ký"
+        {//Xử lý khi người dùng click "Đăng ký" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 if(validate())
@@ -73,7 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
         btnLoginNow.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click "Login Now"
+        {//Xử lý khi người dùng click "Login Now" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 finish();
@@ -82,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validate()
-    {//Kiểm tra dữ liệu đầu xem sao người dùng có bỏ trống không,mật khẩu nhập lại có đúng không
+    {//Kiểm tra dữ liệu đầu xem sao người dùng có bỏ trống không,mật khẩu nhập lại có đúng không - Bành Viết Hùng
         nameStr = edtFullName.getText().toString().trim();
         passStr = edtPassword.getText().toString().trim();
         emailStr = edtEmail.getText().toString().trim();
@@ -108,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signNewUser()
-    {//Xử lý thêm user đăng ký vào database
+    {//Xử lý thêm user đăng ký vào database - Bành Viết Hùng
         progressDialog.show();//hiêện thi vòng quay
         //dùng Firebase Authentication trong Android và được sử dụng để đăng ký một người dùng mới
         mAuth.createUserWithEmailAndPassword(emailStr, passStr)

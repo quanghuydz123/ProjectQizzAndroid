@@ -21,24 +21,24 @@ import com.example.projectqizz.R;
 import java.util.List;
 
 public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManagerAdapter.ViewHolder>
-        //Tạo một RecyclerView Adapter cho quản lý danh sách câu hỏi ở mỗi bài kiểm tra
+        //Tạo một RecyclerView Adapter cho quản lý danh sách câu hỏi ở mỗi bài kiểm tra - Nguyễn Quang Huy
 {
     private List<QuestionModel> questionModelList;
-    //khai báo constructor QuestionManagerAdapter
+    //khai báo constructor QuestionManagerAdapter - Nguyễn Quang Huy
 
     public QuestionManagerAdapter(List<QuestionModel> questionModelList) {
         this.questionModelList = questionModelList;
     }
 
     @NonNull
-    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới
+    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới - Nguyễn Quang Huy
     public QuestionManagerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manager_question_item_layout,parent,false);//tạo view
         return new QuestionManagerAdapter.ViewHolder(view);
     }
 
 
-    @Override//Gán dữ liệu từ questionModelList vào ViewHolder
+    @Override//Gán dữ liệu từ questionModelList vào ViewHolder - Nguyễn Quang Huy
     public void onBindViewHolder(@NonNull QuestionManagerAdapter.ViewHolder holder, int position) {
         String qId = questionModelList.get(position).getqID();
         String ques = questionModelList.get(position).getQuestion();
@@ -53,7 +53,7 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
 
     }
 
-    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là số lượng câu hỏi
+    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là số lượng câu hỏi - Nguyễn Quang Huy
     public int getItemCount() {
         return questionModelList.size();
     }
@@ -63,7 +63,7 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
         private Button btnUpdateQuestion;
 
         public ViewHolder(@NonNull View itemView)
-        {//ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ manager_question_item_layout
+        {//ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ manager_question_item_layout - Nguyễn Quang Huy
             super(itemView);
 
             quesNo = itemView.findViewById(R.id.txt_quesNo);
@@ -77,7 +77,7 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
         }
 
         private void setData(int pos, String ques, String A, String B, String C, String D, int correctAns,String qId)
-        {//Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào
+        {//Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào - Nguyễn Quang Huy
             if(DbQuery.myProfile.getAdmin() == true){
                 btnUpdateQuestion.setVisibility(View.VISIBLE);
             }
@@ -97,7 +97,7 @@ public class QuestionManagerAdapter extends RecyclerView.Adapter<QuestionManager
                 result.setText("Câu trả lời: "+D);
             }
             btnUpdateQuestion.setOnClickListener(new View.OnClickListener()
-            {//Xử lý khi người ấn vào nút "Cập nhật" ở mỗi câu hỏi
+            {//Xử lý khi người ấn vào nút "Cập nhật" ở mỗi câu hỏi - Nguyễn Quang Huy
                 @Override
                 public void onClick(View v) {
                     handleUpdateQuestion(pos,qId);

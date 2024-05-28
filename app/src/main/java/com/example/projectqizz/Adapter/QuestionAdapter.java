@@ -17,36 +17,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder>
-        //Tạo một RecyclerView Adapter cho danh sách câu hỏi khi vào làm bài kiểm tra
+        //Tạo một RecyclerView Adapter cho danh sách câu hỏi khi vào làm bài kiểm tra - Nguyễn Quang Huy
 {
     private List<QuestionModel> questionModelList;
-    //khai báo constructor QuestionAdapter
+    //khai báo constructor QuestionAdapter - Nguyễn Quang Huy
 
     public QuestionAdapter(List<QuestionModel> questionModelList) {
         this.questionModelList = questionModelList;
     }
 
     @NonNull
-    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới
+    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới - Nguyễn Quang Huy
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_item_layuot,parent,false);//tạo view
         return new ViewHolder(view);
     }
 
-    @Override//Gán dữ liệu từ questionModelList vào ViewHolder
+    @Override//Gán dữ liệu từ questionModelList vào ViewHolder - Nguyễn Quang Huy
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //Gọi hàm setData của ViewHolder để cập nhật dữ liệu cho view
         holder.setData(position);
 
     }
 
-    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là số lượng câu hỏi
+    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là số lượng câu hỏi - Nguyễn Quang Huy
     public int getItemCount() {
         return questionModelList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
-    {//ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ question_item_layuot
+    {//ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ question_item_layuot - Nguyễn Quang Huy
         private TextView ques;
         private Button optionA,optionB,optionC,optionD,prevSelectedB;
 
@@ -63,7 +63,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         public void setData(final int pos)
-        { //Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào.
+        { //Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào. - Nguyễn Quang Huy
             ques.setText(questionModelList.get(pos).getQuestion());
             optionA.setText(questionModelList.get(pos).getOptionA());
             optionB.setText(questionModelList.get(pos).getOptionB());
@@ -115,7 +115,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         private void setOptions(Button btn, int option_num, int quesId)
-        {//Thiết lập background cho câu hỏi
+        {//Thiết lập background cho câu hỏi - Nguyễn Quang Huy
             if(DbQuery.g_quesList.get(quesId).getSelectedAns() == option_num){
                 btn.setBackgroundResource(R.drawable.selected_btn);
             }else{
@@ -125,7 +125,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         private void selectOption(Button btn, int option_num, int quesId)
-        //Xử lý khi người dùng click vào 1 đán án bất kỳ
+        //Xử lý khi người dùng click vào 1 đán án bất kỳ - Nguyễn Quang Huy
         {
             if(prevSelectedB == null){//xử lý nếu như người dùng chưa chọn đáp án vào trước đó
                 btn.setBackgroundResource(R.drawable.selected_btn);
@@ -152,7 +152,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         private void changeStatus(int quesId, int answered)
-        {//Cập nhật trang thái câu hỏi (Đã trả lời hoặc chưa trả lời)
+        {//Cập nhật trang thái câu hỏi (Đã trả lời hoặc chưa trả lời) - Nguyễn Quang Huy
             if (DbQuery.g_quesList.get(quesId).getStatus() != DbQuery.REVIEW){
                 DbQuery.g_quesList.get(quesId).setStatus(answered);
             }

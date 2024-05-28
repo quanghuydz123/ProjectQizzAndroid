@@ -32,6 +32,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Bành Viết Hùng
         setContentView(R.layout.activity_forgot_password);
         email = findViewById(R.id.edtEmailForgot);
         btnBack = findViewById(R.id.btn_fp_Back);
@@ -47,7 +48,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         dialogText.setText("Loading...");
 
         btnBack.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người click vào icon "<--" trên cùng (để quay lại giao diện trước đó"
+        {//Xử lý khi người click vào icon "<--" trên cùng (để quay lại giao diện trước đó" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 finish();
@@ -55,7 +56,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
 
         btnLoginNow.setOnClickListener(new View.OnClickListener()
-        {//Xử khi người dùng click vào nút "Login Now"
+        {//Xử khi người dùng click vào nút "Login Now" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 finish();
@@ -63,7 +64,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
 
         btnForgotPassword.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Đổi mật khẩu"
+        {//Xử lý khi người dùng click vào nút "Đổi mật khẩu" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 emailStr = email.getText().toString();
@@ -77,7 +78,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
     private void ResetPassword()
-    {//Hàm này xử lý đổi mật khẩu người dùng
+    {//Hàm này xử lý đổi mật khẩu người dùng - Bành Viết Hùng
         progressDialog.show();
         btnForgotPassword.setVisibility(View.INVISIBLE);
         //Đoạn mã ngày sẽ gửi 1 Link để đổi mật khẩu về email người dùng là giá trị emailStr người dùng nhập vào

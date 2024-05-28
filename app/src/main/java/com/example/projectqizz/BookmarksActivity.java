@@ -26,7 +26,7 @@ public class BookmarksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
         questionView = findViewById(R.id.bm_recyler_view);
-        //Khởi tạo toolbar
+        //Khởi tạo toolbar - Nguyễn Quang Huy
         toolbar = findViewById(R.id.bm_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -41,15 +41,15 @@ public class BookmarksActivity extends AppCompatActivity {
         dialogText.setText("Loading...");
         progressDialog.show();
 
-        //cấu hình recylerView
+        //cấu hình recylerView - Nguyễn Quang Huy
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         questionView.setLayoutManager(layoutManager);
-        ////Gọi hàm xử lý lấy danh sách những câu hỏi đã lưu của người dùng trong database
+        ////Gọi hàm xử lý lấy danh sách những câu hỏi đã lưu của người dùng trong database - Nguyễn Quang Huy
         DbQuery.loadBookmarks(new MyCompleteListener() {
             @Override
             public void onSucces() {
-                //Khởi tạo adapter và truyền adapter cho questionView
+                //Khởi tạo adapter và truyền adapter cho questionView - Nguyễn Quang Huy
                 BookmarkAdapter adapter = new BookmarkAdapter(DbQuery.g_bookmarksList,DbQuery.g_bmIdList);
                 questionView.setAdapter(adapter);
                 progressDialog.dismiss();
@@ -68,7 +68,7 @@ public class BookmarksActivity extends AppCompatActivity {
     //nút mũi tên trên toolbar ấn thoát
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó) - Nguyễn Quang Huy
         if(item.getItemId() == android.R.id.home){
             BookmarksActivity.this.finish();
         }

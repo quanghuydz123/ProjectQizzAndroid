@@ -36,7 +36,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment - Bành Viết Hùng
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Danh mục");
@@ -50,7 +50,7 @@ public class CategoryFragment extends Fragment {
         categoryView.setAdapter(categoryAdapter);
 
         btnCreateCategory.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Thêm danh mục"
+        {//Xử lý khi người dùng click vào nút "Thêm danh mục"- Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 createCategory(categoryAdapter);
@@ -60,7 +60,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void createCategory(CategoryAdapter categoryAdapter)
-    {//Hàm xử lý thêm danh mục
+    {//Hàm xử lý thêm danh mục - Nguyễn Quang Huy
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());//xây dựng ra 1 thông báo
         builder.setCancelable(true);
         View view = LayoutInflater.from(getContext()).inflate(R.layout.form_create_category, null);
@@ -105,7 +105,7 @@ public class CategoryFragment extends Fragment {
             }
 
             private boolean validateData()
-            {//Kiểm tra dữ liệu người dùng nhập vào có bỏ trống không
+            {//Kiểm tra dữ liệu người dùng nhập vào có bỏ trống không - Nguyễn Quang Huy
                 if(edtNameCategory.getText().toString().isEmpty()){
                     edtNameCategory.setError("Hãy nhập tên danh mục !!");
                     return false;

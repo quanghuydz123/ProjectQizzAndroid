@@ -32,7 +32,7 @@ public class ScoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
-        //Khởi tạo toolbar
+        //Khởi tạo toolbar - Bành Viết Hung
         toolbar = findViewById(R.id.toolbarScore);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -49,12 +49,12 @@ public class ScoreActivity extends AppCompatActivity {
 
         init();
 
-        loadData();//Tải các thông tin hiện cần thiết để hiện thị trong app
+        loadData();//Tải các thông tin hiện cần thiết để hiện thị trong app - Nguyễn Quang Huy
 
-        setBookMarks();//Xử lý thêm những câu hỏi người dùng đã muốn lưu trong lúc làm bài vào danh sách
+        setBookMarks();//Xử lý thêm những câu hỏi người dùng đã muốn lưu trong lúc làm bài vào danh sách - Nguyễn Quang Huy
 
         btnViewAns.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click "Xem lại bài làm" (hiện thị danh sách câu hỏi và đáp án mà người dùng đã chọn)
+        {//Xử lý khi người dùng click "Xem lại bài làm" (hiện thị danh sách câu hỏi và đáp án mà người dùng đã chọn) - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ScoreActivity.this,AnswersActivity.class);
@@ -63,7 +63,7 @@ public class ScoreActivity extends AppCompatActivity {
         });
 
         btnReAttempt.setOnClickListener(new View.OnClickListener()
-        {//Hàm này xử lý khi người dùng click "Làm lại" (Chuyển đến giao diện làm lại bài làm)
+        {//Hàm này xử lý khi người dùng click "Làm lại" (Chuyển đến giao diện làm lại bài làm) - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 for(int i = 0 ;i<DbQuery.g_quesList.size(); i++){
@@ -80,7 +80,7 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     private void setBookMarks()
-    {//Hàm này xử lý thêm câu hỏi người dùng muốn lưu vào danh sách g_bmIdList
+    {//Hàm này xử lý thêm câu hỏi người dùng muốn lưu vào danh sách g_bmIdList - Nguyễn Quang Huy
         for (int i = 0 ; i < DbQuery.g_quesList.size() ; i++){
             if(DbQuery.g_quesList.get(i).isBookmarked()){
                 if(!DbQuery.g_bmIdList.contains(DbQuery.g_quesList.get(i).getqID())){
@@ -98,7 +98,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    { //Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
+    { //Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó) - Bành Viết Hùng
         if(item.getItemId() == android.R.id.home){
             ScoreActivity.this.finish();
         }
@@ -107,7 +107,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     private void saveResult()
     {//Hàm này xử lý cập nhập điểm của bài kiểm tra này vào database (Chỉ lấy điểm cao nhất)
-        //Gọi hàm xử lý cập nhập điểm bài kiểm tra vào database
+        //Gọi hàm xử lý cập nhập điểm bài kiểm tra vào database - Nguyễn Quang Huy
         DbQuery.saveResult(finalScore, new MyCompleteListener() {
             @Override
             public void onSucces() {
@@ -124,7 +124,7 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     public void init()
-    {//Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java
+    {//Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java - Nguyễn Quang Huy
         txtScore = findViewById(R.id.txt_score);
         txtTime = findViewById(R.id.txt_time);
         txtTotalQ = findViewById(R.id.txt_totalQ);
@@ -137,7 +137,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     }
     public void loadData()
-    {//Hàm này xử lý load các thông tin liên quan hiện thi lên layout (điểm số,số câu làm sai,số câu làm đúng,...)
+    {//Hàm này xử lý load các thông tin liên quan hiện thi lên layout (điểm số,số câu làm sai,số câu làm đúng,...) - Nguyễn Quang Huy
         int correctQ = 0,wrongQ = 0,unanttempQ = 0;
         for(int i = 0 ; i < DbQuery.g_quesList.size() ; i++){
             if(DbQuery.g_quesList.get(i).getSelectedAns() == -1){

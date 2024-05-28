@@ -14,21 +14,21 @@ import com.example.projectqizz.R;
 import java.util.List;
 
 public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHolder>
-    //Tạo một RecyclerView Adapter cho danh sách câu trả lời khi người dùng làm bài xong
+    //Tạo một RecyclerView Adapter cho danh sách câu trả lời khi người dùng làm bài xong - Bành Viết Hùng
 {
     private List<QuestionModel> questionModelList;
-    //khai báo constructor AnswersAdapter
+    //khai báo constructor AnswersAdapter - Bành Viết Hùng
     public AnswersAdapter(List<QuestionModel> questionModelList) {
         this.questionModelList = questionModelList;
     }
     @NonNull
-    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới
+    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới - Bành Viết Hùng
     public AnswersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.answer_item_layout,parent,false);//tạo view
         return new AnswersAdapter.ViewHolder(view);
     }
 
-    @Override//Gán dữ liệu từ questionModelList vào ViewHolder
+    @Override//Gán dữ liệu từ questionModelList vào ViewHolder - Bành Viết Hùng
     public void onBindViewHolder(@NonNull AnswersAdapter.ViewHolder holder, int position) {
         String ques = questionModelList.get(position).getQuestion();
         String A = questionModelList.get(position).getOptionA();
@@ -42,13 +42,13 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
 
     }
 
-    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là số lượng câu hỏi
+    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là số lượng câu hỏi - Bành Viết Hùng
     public int getItemCount() {
         return questionModelList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
-     //ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ answer_item_layout
+     //ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ answer_item_layout - Bành Viết Hùng
     {
         private TextView quesNo,question,optionA,optionB,optionC,optionD,result;
         public ViewHolder(@NonNull View itemView) {
@@ -64,7 +64,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
         }
 
         private void setData(int pos,String ques,String A,String B,String C,String D,int selected,int correctAns)
-        //Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào.
+        //Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào. - Bành Viết Hùng
         {
             quesNo.setText("Câu hổi số: " + String.valueOf(pos+1));
             question.setText(ques);
@@ -94,7 +94,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
 
         }
         private void setOptionColor(int selected, int color)
-        //Đổi màu sắc chữ dựa trên lựa chọn của người dùng (đúng xanh,sai đỏ)
+        //Đổi màu sắc chữ dựa trên lựa chọn của người dùng (đúng xanh,sai đỏ) - Bành Viết Hùng
         {
             if(selected == 1){
                 optionA.setTextColor(itemView.getContext().getResources().getColor(color));

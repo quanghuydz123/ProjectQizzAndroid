@@ -48,38 +48,38 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.questions_list_layout);
 
         init();
-        //cấu hình recylerView
+        //cấu hình recylerView - Nguyễn Quang Huy
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         questionsView.setLayoutManager(layoutManager);
-        //Khởi tạo adapter và truyền cho questionsView
+        //Khởi tạo adapter và truyền cho questionsView - Nguyễn Quang Huy
         adapter = new QuestionAdapter(DbQuery.g_quesList);
         questionsView.setAdapter(adapter);
-        //Khởi tạo adapter và truyền cho quesListGV
+        //Khởi tạo adapter và truyền cho quesListGV - Nguyễn Quang Huy
         questionGridAdapter = new QuestionGridAdapter(this,DbQuery.g_quesList.size());
         quesListGV.setAdapter(questionGridAdapter);
         quesListGV.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {//xử lý click các item trong danh sách quesListGV
+        {//xử lý click các item trong danh sách quesListGV - Nguyễn Quang Huy
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 goToQuestion(position);
             }
         });
-        setSnapHelper(); // xử lý cuộn recylerView
+        setSnapHelper(); // xử lý cuộn recylerView - Nguyễn Quang Huy
         
-        setClickListeners(); // xử lý click
+        setClickListeners(); // xử lý click - Nguyễn Quang Huy
 
-        setStartTimer(); // bat dau tinh thoi gian
+        setStartTimer(); // bat dau tinh thoi  - Nguyễn Quang Huy
     }
     private void goToQuestion(int position)
-    {//Hàm này giúp chuyển tới layout câu hỏi dựa vào position
+    {//Hàm này giúp chuyển tới layout câu hỏi dựa vào position - Nguyễn Quang Huy
         questionsView.smoothScrollToPosition(position);
         if(drawerLayout.isDrawerOpen(GravityCompat.END)){
             drawerLayout.closeDrawer(GravityCompat.END);
         }
     }
     private void setStartTimer()
-    {//Hàm này xử lý tính thời gian làm bài
+    {//Hàm này xử lý tính thời gian làm bài - Nguyễn Quang Huy
         long totalTime = DbQuery.g_testList.get(DbQuery.g_selected_test_index).getTime()*60*1000;
         timer = new CountDownTimer(totalTime + 1000,1000) {
             @Override
@@ -96,7 +96,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
             @Override
             public void onFinish()
-            {//Hàm này được gọi timer < 0 tức là hết thời gian làm bài
+            {//Hàm này được gọi timer < 0 tức là hết thời gian làm  - Nguyễn Quang Huy
                 Intent intent = new Intent(QuestionsActivity.this,ScoreActivity.class);
                 long totalTime = DbQuery.g_testList.get(DbQuery.g_selected_test_index).getTime()*60*1000;
                 intent.putExtra("TIME_TAKEN",totalTime - timeLeft);
@@ -108,7 +108,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void setClickListeners()
-    {//Hàm này xử lý các click các button
+    {//Hàm này xử lý các click các button - Nguyễn Quang Huy
         btnPrevQues.setOnClickListener(new View.OnClickListener()
         {//Hàm này xử lý khi người click icon "<" (để quay lại câu hỏi trước đó)
             @Override
@@ -120,7 +120,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
 
         btnNextQues.setOnClickListener(new View.OnClickListener()
-        {//Hàm này xử lý khi người click icon ">" (để qua câu hỏi tiếp theo)
+        {//Hàm này xử lý khi người click icon ">" (để qua câu hỏi tiếp theo) - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 if(quesId < DbQuery.g_quesList.size() -1){
@@ -130,7 +130,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
 
         btnClearSel.setOnClickListener(new View.OnClickListener()
-        {//Hàm này xử lý xóa bỏ đáp án người dùng đang chọn
+        {//Hàm này xử lý xóa bỏ đáp án người dùng đang chọn - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 DbQuery.g_quesList.get(quesId).setSelectedAns(-1);
@@ -141,7 +141,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
 
         btnQuesList.setOnClickListener(new View.OnClickListener()
-        {//Hàm này xử lý người dùng muốn xem tình trạng câu hỏi (Sau khi click hiện thị drawer layout hiện thị danh sách câu hỏi với tình trạng tương ứng
+        {//Hàm này xử lý người dùng muốn xem tình trạng câu hỏi - Nguyễn Quang Huy (Sau khi click hiện thị drawer layout hiện thị danh sách câu hỏi với tình trạng tương ứng
             @Override
             public void onClick(View v)
             {
@@ -164,7 +164,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
 
         btnMark.setOnClickListener(new View.OnClickListener()
-        {//Hàm này xử lý đánh dấu câu hỏi
+        {//Hàm này xử lý đánh dấu câu hỏi - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 if(markImage.getVisibility() != View.VISIBLE){
@@ -183,7 +183,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
 
         btnSubmit.setOnClickListener(new View.OnClickListener()
-        {//Hàm này sử lý nộp bài khi người dùng ấn nút "Nộp bài"
+        {//Hàm này sử lý nộp bài khi người dùng ấn nút "Nộp bài" - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 submitTest();
@@ -191,7 +191,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
 
         btnBookMark.setOnClickListener(new View.OnClickListener()
-        {//Hàm này xử khi người dùng muốn lưu câu hỏi này vào danh sách "câu hỏi đã lưu"
+        {//Hàm này xử khi người dùng muốn lưu câu hỏi này vào danh sách "câu hỏi đã lưu" - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 addToBookmarks();
@@ -200,7 +200,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void addToBookmarks()
-    {//Hàm này xử lý lưu câu hỏi vào danh sách "câu hỏi đã lưu" cho người dùng
+    {//Hàm này xử lý lưu câu hỏi vào danh sách "câu hỏi đã lưu" cho người dùng - Nguyễn Quang Huy
         if(DbQuery.g_quesList.get(quesId).isBookmarked()){
             DbQuery.g_quesList.get(quesId).setBookmarked(false);
             btnBookMark.setImageResource(R.drawable.twotone_bookmark_24);
@@ -211,7 +211,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void submitTest()
-    {//Hàm này xử lý khi người dùng click vào nút "Nộp bài"
+    {//Hàm này xử lý khi người dùng click vào nút "Nộp bài" - Nguyễn Quang Huy
         AlertDialog.Builder builder = new AlertDialog.Builder(QuestionsActivity.this);//xây dựng ra 1 thông báo
         builder.setCancelable(true);
 
@@ -248,7 +248,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
     private void setSnapHelper() {
         //Đoạn mã này tạo một đối tượng PagerSnapHelper và gắn nó vào RecyclerView có tên là questionsView.
-        //PagerSnapHelper giúp tự động cuộn tới mục gần nhất và căn giữa mục đó khi người dùng dừng cuộn.
+        //PagerSnapHelper giúp tự động cuộn tới mục gần nhất và căn giữa mục đó khi người dùng dừng cuộn. - Nguyễn Quang Huy
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(questionsView);
 
@@ -287,7 +287,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void init(){
-        //Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java
+        //Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java - Nguyễn Quang Huy
         questionsView = findViewById(R.id.questions_view);
         txtQuesID = findViewById(R.id.txt_quesId);
         txtTimer = findViewById(R.id.txt_timer);

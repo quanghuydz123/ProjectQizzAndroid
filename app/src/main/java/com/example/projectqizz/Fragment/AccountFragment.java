@@ -69,7 +69,7 @@ public class AccountFragment extends Fragment {
         progressDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText("Loading...");
-        //set value rank và score cho người dùng
+        //set value rank và score cho người dùng - Nguyễn Quang Huy
         if(DbQuery.g_usersList.size() == 0 )
         {
             progressDialog.show();
@@ -104,7 +104,7 @@ public class AccountFragment extends Fragment {
                 txt_rank.setText("Hạng: " +DbQuery.myPerformance.getRank());
             }
         }
-        //xử lý đăng xuất
+        //xử lý đăng xuất - Nguyễn Quang Huy
         btnLogout.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -129,7 +129,7 @@ public class AccountFragment extends Fragment {
         });
 
         btn_bookmark.setOnClickListener(new View.OnClickListener()
-        {//Xử lý chuyển qua giao diện "Danh sách câu hỏi đã lưu" của người dùng
+        {//Xử lý chuyển qua giao diện "Danh sách câu hỏi đã lưu" của người dùng - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), BookmarksActivity.class);
@@ -137,7 +137,7 @@ public class AccountFragment extends Fragment {
             }
         });
         btn_profile.setOnClickListener(new View.OnClickListener()
-        {//Xử lý chuyển qua giao diện thông tin các nhân của người dùng
+        {//Xử lý chuyển qua giao diện thông tin các nhân của người dùng - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MyProfileActivity.class);
@@ -145,7 +145,7 @@ public class AccountFragment extends Fragment {
             }
         });
         btn_leader.setOnClickListener(new View.OnClickListener()
-        {//Xử lý chuyển qua giao diện danh sách bảng xếp hạng
+        {//Xử lý chuyển qua giao diện danh sách bảng xếp hạng - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 bottomNavigationView.setSelectedItemId(R.id.nav_leaderboard_buttonMenu);
@@ -155,7 +155,7 @@ public class AccountFragment extends Fragment {
         return view;
     }
     public void init(View view){
-        //Hàm này khởi tạo các thành phần giao diện từ View được truyền vào
+        //Hàm này khởi tạo các thành phần giao diện từ View được truyền vào - Nguyễn Quang Huy
         btnLogout = view.findViewById(R.id.btn_logout);
         txt_image_profile = view.findViewById(R.id.txt_image_profile);
         txt_name = view.findViewById(R.id.txt_name_account);
@@ -168,7 +168,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void calculateRank() {
-        //Hàm này tính toán và đặt thứ hạng cho người dùng
+        //Hàm này tính toán và đặt thứ hạng cho người dùng - Nguyễn Quang Huy
         int lowTopScore = DbQuery.g_usersList.get(DbQuery.g_usersList.size()-1).getScore();
         int remaining_slots = DbQuery.g_usersCount - 100;
         int mySlot = (DbQuery.myPerformance.getScore()*remaining_slots)/lowTopScore;

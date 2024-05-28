@@ -24,25 +24,25 @@ import com.example.projectqizz.TestActivity;
 import java.util.List;
 
 public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHolder>
-        //RecyclerView Adapter của danh sách câu hỏi mà người dùng đã lưu trong lúc làm bài
+        //RecyclerView Adapter của danh sách câu hỏi mà người dùng đã lưu trong lúc làm bài - Nguyễn Quang Huy
 {
     private List<QuestionModel> questionModelList;
     private List<String> size;
     private Context context;
-    //khai báo constructor BookmarkAdapter
+    //khai báo constructor BookmarkAdapter - Nguyễn Quang Huy
     public BookmarkAdapter(List<QuestionModel> questionModelList,List<String> size) {
         this.questionModelList = questionModelList;
         this.size = size;
     }
 
     @NonNull
-    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới
+    @Override//Phương thức này được gọi khi RecyclerView cần tạo một ViewHolder mới - Nguyễn Quang Huy
     public BookmarkAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmarks_item_layout,parent,false);//tạo view
         return new BookmarkAdapter.ViewHolder(view);
     }
 
-    @Override////Gán dữ liệu từ questionModelList vào ViewHolder.
+    @Override////Gán dữ liệu từ questionModelList vào ViewHolder. - Nguyễn Quang Huy
     public void onBindViewHolder(@NonNull BookmarkAdapter.ViewHolder holder, int position) {
         String qId = questionModelList.get(position).getqID();
         String ques = questionModelList.get(position).getQuestion();
@@ -57,13 +57,13 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
 
     }
 
-    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là size truyền vào
+    @Override//Phương thức này trả về số lượng phần tử trong questionModelList tức là size truyền vào - Nguyễn Quang Huy
     public int getItemCount() {
         return size.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
-     //ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ bookmarks_item_layout
+     //ViewHolder chứa các thành phần giao diện của mỗi item trong danh sách, được ánh xạ từ bookmarks_item_layout - Nguyễn Quang Huy
     {
         private TextView quesNo, question, optionA, optionB, optionC, optionD, result;
         private Button btnCancelBm;
@@ -82,7 +82,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
         }
 
         private void setData(int pos, String ques, String A, String B, String C, String D, int correctAns,String qId)
-        //Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào.
+        //Cập nhật dữ liệu và giao diện của một item dựa trên thông tin được truyền vào. - Nguyễn Quang Huy
         {
             quesNo.setText("Câu hổi số: " + String.valueOf(pos + 1));
             question.setText(ques);
@@ -99,7 +99,8 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
             }else if(correctAns == 4 ){
                 result.setText("Câu trả lời: "+D);
             }
-            btnCancelBm.setOnClickListener(new View.OnClickListener() {
+            btnCancelBm.setOnClickListener(new View.OnClickListener()
+            {//Xử lý khi người dùng click nút "Hủy" (Để xóa câu hỏi đã lưu ra khỏi danh sách) - Nguyễn Quang Huy
                 @Override
                 public void onClick(View v) {
                     handleCancelBm(pos,qId);
@@ -109,7 +110,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
         }
 
         private void handleCancelBm(int pos,String qId)
-         //Hàm xử lý khi người dùng muốn xóa câu hỏi đã lưu trong danh sách
+         //Hàm xử lý khi người dùng muốn xóa câu hỏi đã lưu trong danh sách - Nguyễn Quang Huy
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());//xây dựng ra 1 thông báo
             builder.setCancelable(true);
@@ -121,7 +122,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
             builder.setView(view);
             AlertDialog alertDialog = builder.create();//tạo ra thông báo
             btn_cancel.setOnClickListener(new View.OnClickListener()
-            {//xử lý khi người dùng ấn "No"
+            {//xử lý khi người dùng ấn "No" - Nguyễn Quang Huy
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
@@ -129,7 +130,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
             });
 
             btn_cofirm.setOnClickListener(new View.OnClickListener()
-            {//xử lý khi người dùng ấn "Yes"
+            {//xử lý khi người dùng ấn "Yes" - Nguyễn Quang Huy
                 @Override
                 public void onClick(View v) {
                     if(DbQuery.g_bmIdList.contains(qId)){

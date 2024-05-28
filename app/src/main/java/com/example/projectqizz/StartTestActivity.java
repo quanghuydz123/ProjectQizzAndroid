@@ -25,7 +25,7 @@ public class StartTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_test);
-
+        // Bành Viết Hùng
         progressDialog  = new Dialog(StartTestActivity.this);//set vòng quay quay
         progressDialog.setContentView(R.layout.dialog_layout);
         progressDialog.setCancelable(false);
@@ -34,7 +34,7 @@ public class StartTestActivity extends AppCompatActivity {
         dialogText.setText("Loading...");
         progressDialog.show();
         init();
-        //Gọi hàm xử lý tải thông tin  bài kiểm tra để hiện thi lên layout
+        //Gọi hàm xử lý tải thông tin  bài kiểm tra để hiện thi lên layout - Bành Viết Hùng
         DbQuery.loadQuestions(new MyCompleteListener() {
             @Override
             public void onSucces() {
@@ -56,7 +56,7 @@ public class StartTestActivity extends AppCompatActivity {
     }
 
     private void setData()
-    {//Hàm này xử lý cập nhập thông tin bài kiểm tra
+    {//Hàm này xử lý cập nhập thông tin bài kiểm tra - Bành Viết Hùng
         txtCatName.setText(DbQuery.g_catList.get(DbQuery.g_selected_cat_index).getName());
         txtTestNo.setText(DbQuery.g_testList.get(DbQuery.g_selected_test_index).getName());
         txtTotalQ.setText(String.valueOf(DbQuery.g_quesList.size()));
@@ -65,7 +65,7 @@ public class StartTestActivity extends AppCompatActivity {
     }
 
     public void init(){
-        //Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java
+        //Đoạn mã này tìm và gán các thành phần giao diện từ tệp XML layout vào các biến Java - Bành Viết Hùng
         txtCatName = findViewById(R.id.txt_st_cat_name);
         txtTestNo = findViewById(R.id.txt_st_test_no);
         txtTotalQ = findViewById(R.id.txt_st_total_question);
@@ -76,7 +76,7 @@ public class StartTestActivity extends AppCompatActivity {
         btnManagerQuestion = findViewById(R.id.btn_managerQuestion);
 
         btnBack.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click icon "<--" (để quay lại giao diện trước đó)
+        {//Xử lý khi người dùng click icon "<--" (để quay lại giao diện trước đó) - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 StartTestActivity.this.finish();
@@ -84,7 +84,7 @@ public class StartTestActivity extends AppCompatActivity {
         });
 
         btnStartTest.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Bắt đầu" (Chuyển đến giao diện làm bài)
+        {//Xử lý khi người dùng click vào nút "Bắt đầu" (Chuyển đến giao diện làm bài) - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StartTestActivity.this, QuestionsActivity.class);
@@ -94,7 +94,7 @@ public class StartTestActivity extends AppCompatActivity {
             }
         });
         btnManagerQuestion.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Quản lý câu hỏi" (Chuyển đến layout quản lý câu hỏi)
+        {//Xử lý khi người dùng click vào nút "Quản lý câu hỏi" (Chuyển đến layout quản lý câu hỏi) - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StartTestActivity.this, ManagerQuestionActivity.class);

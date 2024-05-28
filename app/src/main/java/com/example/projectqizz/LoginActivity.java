@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        // - Bành Viết Hùng
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText(" Signing in...");
 
-        //thiết lập cấu hình cho đăng nhập Google và tạo một đối tượng khách hàng GoogleSignInClient để bắt đầu quá trình đăng nhập
+        //thiết lập cấu hình cho đăng nhập Google và tạo một đối tượng khách hàng GoogleSignInClient để bắt đầu quá trình đăng nhập - Bành Viết Hùng
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
 
         btnLogin.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Đăng nhập"
+        {//Xử lý khi người dùng click vào nút "Đăng nhập" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 if(validateData()){
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         btnSignUp.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Đăng ký"
+        {//Xử lý khi người dùng click vào nút "Đăng ký" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 //Chuyển sang giao diện đăng ký
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         btnSignInGoogle.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Đăng nhập bằng google"
+        {//Xử lý khi người dùng click vào nút "Đăng nhập bằng google" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 googleSignIn();
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         btnForgotPassword.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "SIGN UP"
+        {//Xử lý khi người dùng click vào nút "SIGN UP" - Bành Viết Hùng
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
@@ -108,13 +108,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void googleSignIn()
-    {//khởi động quá trình đăng nhập bằng Google
+    {//khởi động quá trình đăng nhập bằng Google - Bành Viết Hùng
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent,RC_SIGN_IN);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) //di kem dang nhap bang gooogle
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) //di kem dang nhap bang gooogle - Bành Viết Hùng
     {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode  == RC_SIGN_IN){
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     private void firebaseAuthWithGoogle(String idToken)
-    {//Hàm xử lý login bằng google
+    {//Hàm xử lý login bằng google - Bành Viết Hùng
         progressDialog.show();
         AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(firebaseCredential)
@@ -217,7 +217,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
     private void login()
-    {//Hàm xử lý login bằng tài khoản mật khẩu
+    {//Hàm xử lý login bằng tài khoản mật khẩu - Bành Viết Hùng
         progressDialog.show();//hiện thị họp thoai vòng vòng
         //Check tài khoản mật khẩu bằng hàm signInWithEmailAndPassword
         mAuth.signInWithEmailAndPassword(edtEmail.getText().toString().trim(), edtPassword.getText().toString().trim())
@@ -257,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validateData()
-    {//Hàm này xử lý check dữ liệu đầu vào xem coi người dùng có bỏ trống không
+    {//Hàm này xử lý check dữ liệu đầu vào xem coi người dùng có bỏ trống không - Bành Viết Hùng
         if(edtEmail.getText().toString().isEmpty()){
             edtEmail.setError("Enter E-Mail ID");
             return false;

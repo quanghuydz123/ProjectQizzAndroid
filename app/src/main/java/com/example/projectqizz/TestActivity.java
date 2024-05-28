@@ -37,11 +37,11 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
+        // - Bành Viết Hùng
         testView = findViewById(R.id.test_recyler_view);
         toolbar = findViewById(R.id.toolbar);
         btnCreateTest = findViewById(R.id.btn_create_test);
-        //Khỏi tạo toolbar
+        //Khỏi tạo toolbar - Bành Viết Hùng
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(DbQuery.g_catList.get(DbQuery.g_selected_cat_index).getName());
@@ -55,7 +55,7 @@ public class TestActivity extends AppCompatActivity {
         dialogText.setText("Loading...");
         progressDialog.show();
 
-        //cấu hình recylerView
+        //cấu hình recylerView - Bành Viết Hùng
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         testView.setLayoutManager(layoutManager);
@@ -64,7 +64,7 @@ public class TestActivity extends AppCompatActivity {
             btnCreateTest.setVisibility(View.VISIBLE);
         }
 
-        //Gọi hàm tải các thông tin về các bài kiểm trả và hiện thị lên giao diện
+        //Gọi hàm tải các thông tin về các bài kiểm trả và hiện thị lên giao diện - Bành Viết Hùng
         DbQuery.loadTestData(new MyCompleteListener() {
             @Override
             public void onSucces() {
@@ -106,7 +106,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void createTest(TestAdapter testAdapter)
-    {//Hàm này xử lý thêm bài kiểm tra và lưu xuống database
+    {//Hàm này xử lý thêm bài kiểm tra và lưu xuống database - Nguyễn Quang Huy
         AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);//xây dựng ra 1 thông báo
         builder.setCancelable(true);
         View view = LayoutInflater.from(TestActivity.this).inflate(R.layout.form_create_test, null);
@@ -151,7 +151,7 @@ public class TestActivity extends AppCompatActivity {
             }
 
             private boolean validateData()
-            {//Hàm này xử lý kiểm tra dữ liệu đầu vào khi người dùng thêm bài kiểm tra có bỏ trống hay không
+            {//Hàm này xử lý kiểm tra dữ liệu đầu vào khi người dùng thêm bài kiểm tra có bỏ trống hay không - Mguyễn Quang Huy
                 if(edtNameTest.getText().toString().isEmpty()){
                     edtNameTest.setError("Hãy nhập tên tên bài kiểm tra !!");
                     return false;
@@ -169,7 +169,7 @@ public class TestActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó) - Bành Viết Hùng
         if(item.getItemId() == android.R.id.home){
             TestActivity.this.finish();
         }

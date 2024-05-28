@@ -32,7 +32,7 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
-
+        //Nguyễn Quang Huy
         edtName = findViewById(R.id.edt_mp_name);
         edtEmail = findViewById(R.id.edt_mp_email);
         edtPhone = findViewById(R.id.edt_mp_phone);
@@ -41,7 +41,7 @@ public class MyProfileActivity extends AppCompatActivity {
         btn_save = findViewById(R.id.btn_save_pf);
         txt_profile = findViewById(R.id.txt_profile);
         btn_layout = findViewById(R.id.btn_layout);
-        //Khởi tạo toolbar
+        //Khởi tạo toolbar - Nguyễn Quang Huy
         toolbar = findViewById(R.id.toolbar_pf);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -55,10 +55,10 @@ public class MyProfileActivity extends AppCompatActivity {
         dialogText = progressDialog.findViewById(R.id.txtdialog);
         dialogText.setText("Updating Data...");
 
-        disableEditing();//Hàm này xử lý load thông tin người và disable input không cho người dùng chỉnh sửa nếu chưa ấn nút "Edit"
+        disableEditing();//Hàm này xử lý load thông tin người và disable input không cho người dùng chỉnh sửa nếu chưa ấn nút "Edit" - Nguyễn Quang Huy
 
         btn_edit.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Edit"
+        {//Xử lý khi người dùng click vào nút "Edit" - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 enalbleEditing();
@@ -66,7 +66,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
 
         btn_cancel.setOnClickListener(new View.OnClickListener()
-        {//Xử lý khi người dùng click vào nút "Hủy"
+        {//Xử lý khi người dùng click vào nút "Hủy" - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 disableEditing();
@@ -74,7 +74,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
 
         btn_save.setOnClickListener(new View.OnClickListener()
-        {//Sử lý khi người dùng click vào nút "Lưu"
+        {//Sử lý khi người dùng click vào nút "Lưu" - Nguyễn Quang Huy
             @Override
             public void onClick(View v) {
                 if(validate()){
@@ -84,7 +84,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
     private boolean validate()
-    {//Check dữ liệu đầu vào xem coi người dùng có bỏ trống không
+    {//Check dữ liệu đầu vào xem coi người dùng có bỏ trống không - Nguyễn Quang Huy
         nameStr = edtName.getText().toString();
         phoneStr = edtPhone.getText().toString();
 
@@ -101,13 +101,13 @@ public class MyProfileActivity extends AppCompatActivity {
         return true;
     }
     private void saveData()
-    {//Hàm này sử lý cập nhật thông tin vừa chỉnh sửa vào database
+    {//Hàm này sử lý cập nhật thông tin vừa chỉnh sửa vào database - Nguyễn Quang Huy
         progressDialog.show();
 
         if(phoneStr.isEmpty()){
             phoneStr=null;
         }
-        //Gọi hàm xử lý cập nhập thông tin người dùng vào database
+        //Gọi hàm xử lý cập nhập thông tin người dùng vào database - Nguyễn Quang Huy
         DbQuery.saveProfileData(nameStr, phoneStr, new MyCompleteListener() {
             @Override
             public void onSucces() {
@@ -126,7 +126,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
     private void enalbleEditing()
-    {//Hàm này xử lý cho phép người dùng chỉnh sửa thông tin trong các input
+    {//Hàm này xử lý cho phép người dùng chỉnh sửa thông tin trong các input - Nguyễn Quang Huy
         edtName.setEnabled(true);
         edtPhone.setEnabled(true);
         //edtEmail.setEnabled(true);
@@ -134,7 +134,7 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     private void disableEditing()
-    {//Hàm này xử lý disable các input không cho người dùng chỉnh sửa và hiện thị thông tin người dùng
+    {//Hàm này xử lý disable các input không cho người dùng chỉnh sửa và hiện thị thông tin người dùng - Nguyễn Quang Huy
         edtName.setEnabled(false);
         edtPhone.setEnabled(false);
         edtEmail.setEnabled(false);
@@ -155,7 +155,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó)
+    {//Ghi dè hàm này xử lý khi người click vào icon "<--" trên toolbar (để quay lại giao diện trước đó) - Nguyễn Quang Huy
         if(item.getItemId() == android.R.id.home){
             MyProfileActivity.this.finish();
         }
