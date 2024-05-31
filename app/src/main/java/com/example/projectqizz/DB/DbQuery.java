@@ -509,9 +509,13 @@ public class DbQuery{
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         int top = 0;
-                                        for (int i = 0; i < g_testList.size(); i++) {
-                                            if (documentSnapshot.get(g_testList.get(i).getTestID()) != null) {
-                                                top += documentSnapshot.getLong(g_testList.get(i).getTestID()).intValue();
+                                        if (documentSnapshot.exists()) {
+                                            Map<String, Object> data = documentSnapshot.getData();
+                                            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                                                Object value = entry.getValue();
+                                                if (value instanceof Number) {
+                                                    top += ((Number) value).intValue();
+                                                }
                                             }
                                         }
                                         myPerformance.setScore(top);

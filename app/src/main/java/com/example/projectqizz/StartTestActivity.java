@@ -87,10 +87,15 @@ public class StartTestActivity extends AppCompatActivity {
         {//Xử lý khi người dùng click vào nút "Bắt đầu" (Chuyển đến giao diện làm bài) - Bành Viết Hùng
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartTestActivity.this, QuestionsActivity.class);
-                startActivity(intent);
-                finish();
-
+                if(DbQuery.g_quesList.size() > 0){
+                    Intent intent = new Intent(StartTestActivity.this, QuestionsActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(StartTestActivity.this,"Không có câu hỏi nào trong bài làm này vui lòng chọn bài làm khác !!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btnManagerQuestion.setOnClickListener(new View.OnClickListener()
